@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="VibeCat Music - Your personal music player with a purple cat companion!">
+<meta name="keywords" content="music player, cat, vibecat, purple cat">
+    <title>VibeCat Music Studio</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="songs.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+</head>
+<body>
+    <header>
+        <h1>🎵 VibeCat Music</h1>
+        <p>My personal buddy to jam tunes with</p>
+    </header>
+
+    <main>
+        <nav class="side-bar">
+            <section class="local-songs">
+    <h3>🎵 My Tunes</h3>
+   <ul id="localSongList">
+
+   </ul>
+</section>
+        </nav>
+        <section class="cat-section">
+            <div class="cat-art">
+                <div class="cat">
+    <!-- Ears -->
+    <div class="ear left-ear"></div>
+    <div class="ear right-ear"></div>
+    
+    <!-- Head -->
+    <div class="head">
+        <!-- Eyes -->
+        <div class="eye left-eye">
+            <div class="pupil"></div>
+        </div>
+        <div class="eye right-eye">
+            <div class="pupil"></div>
+        </div>
+        
+        <!-- Nose -->
+        <div class="nose"></div>
+        
+        <!-- Mouth -->
+        <div class="mouth"></div>
+        
+        <!-- Whiskers -->
+        <div class="whisker left-whisker"></div>
+        <div class="whisker right-whisker"></div>
+    </div>
+</div>
+                
+            </div>
+        </section>
+<div class="player-frame">
+     <section class="player-section">
+            <video 
+                controls 
+                class="music-player"
+                autoplay
+                loop
+            >
+                <p>Your browser doesn't support HTML video.</p>
+            </video>
+        </section>
+</div>
+       
+    </main>
+
+    <footer>
+        <p>Built while waiting for the assignment to drop — because why not? ✨</p>
+    </footer>
+</body>
+</html>

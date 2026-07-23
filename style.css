@@ -1,0 +1,325 @@
+/* ===== RESET & BASE ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+    color: #fff;
+    padding: 20px;
+}
+
+/* ===== HEADER ===== */
+header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+header h1 {
+    font-size: 2.5rem;
+    background: linear-gradient(135deg, #a78bfa, #8b5cf6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+header p {
+    color: #c4b5fd;
+    font-size: 1.1rem;
+    opacity: 0.8;
+}
+
+button{
+    
+    background-color: #ff17b5;
+    padding: 0.9rem;
+    margin: 1rem;
+    border-radius: 40px;
+    border: #1b08f0;
+    box-shadow: 0 10px 60px #8b5cf6;
+}
+
+button:hover{
+     transition: background-color 0.3s ease, color 0.3s ease;
+    background-color: #3b0148;
+}
+
+.side-bar{
+   position: fixed;
+            top: 0;
+            left: 0;
+            width: 150px;
+            height: 200vh;
+          
+            padding: 24px 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;;
+
+}
+#localSongList{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+     margin-left: 26px; 
+    padding: 40px;
+     min-height: 100vh;
+}
+/* ===== Cat Section ===== */
+.cat-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+ 
+.cat-art {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+ 
+.cat {
+  position: relative;
+  width: 200px;
+  height: 200px;
+}
+ 
+/* Ears */
+.ear {
+  position: absolute;
+  top: -20px;
+  width: 0;
+  height: 0;
+  border-left: 35px solid transparent;
+  border-right: 35px solid transparent;
+  border-bottom: 60px solid #9b4de0;
+  filter: drop-shadow(0 0 6px rgba(155, 77, 224, 0.6));
+}
+ 
+.left-ear {
+  left: 10px;
+  transform: rotate(-15deg);
+}
+ 
+.right-ear {
+  right: 10px;
+  transform: rotate(15deg);
+}
+ 
+/* Head */
+.head {
+  position: relative;
+  width: 200px;
+  height: 180px;
+  background: linear-gradient(145deg, #b565f0, #7b2ff7);
+  border-radius: 50% 50% 45% 45%;
+  box-shadow: 0 0 25px rgba(155, 77, 224, 0.7), inset 0 -10px 20px rgba(0,0,0,0.15);
+  margin: 0 auto;
+}
+ 
+/* Eyes */
+.eye {
+  position: absolute;
+  top: 70px;
+  width: 36px;
+  height: 36px;
+  background: #fff0ff;
+  border-radius: 50%;
+  box-shadow: 0 0 8px rgba(255,255,255,0.7);
+}
+ 
+.left-eye {
+  left: 45px;
+}
+ 
+.right-eye {
+  right: 45px;
+}
+ 
+.pupil {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 16px;
+  height: 16px;
+  background: #2a0a4a;
+  border-radius: 50%;
+}
+ 
+/* Nose */
+.nose {
+  position: absolute;
+  top: 110px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 14px;
+  height: 10px;
+  background: #ff9de2;
+  border-radius: 50%;
+}
+ 
+/* Mouth */
+.mouth {
+  position: absolute;
+  top: 122px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 20px;
+  border-bottom: 3px solid #2a0a4a;
+  border-radius: 0 0 50% 50%;
+}
+ 
+/* Whiskers */
+.whisker {
+  position: absolute;
+  top: 105px;
+  width: 60px;
+  height: 2px;
+  background: #f3e8ff;
+  opacity: 0.8;
+}
+ 
+.left-whisker {
+  left: -50px;
+  transform: rotate(-8deg);
+}
+ 
+.right-whisker {
+  right: -50px;
+  transform: rotate(8deg);
+}
+ 
+
+/* --- Cat Message --- */
+.cat-message {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 1.2rem;
+    color: #c4b5fd;
+    font-style: italic;
+}
+
+/* ===== PLAYER SECTION ===== */
+.player-section {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    max-width: 600px;
+    margin: 0 auto 30px;
+    backdrop-filter: blur(6px)
+}
+
+.music-player {
+    width: 100%;
+    max-width: 500px;
+    border-radius: 30px;
+    background: #1e1b2e;
+    box-shadow: 0 10px 40px rgba(108, 20, 249, 0.5);
+}
+.player-frame{
+    display: block;
+   background: linear-gradient(30deg, #b508ac, #16b95f, #0c176c);
+    background-size: 400% 400%;
+    animation: shift 3s infinite;
+}
+@keyframes shift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+ 
+/* ===== FOOTER ===== */
+footer {
+    text-align: center;
+    color: #6d6a8f;
+    font-size: 0.9rem;
+    padding: 20px 0;
+    border-top: 1px solid #2d2a4e;
+    width: 100%;
+    max-width: 600px;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 600px) {
+    .cat-art {
+        width: 200px;
+        height: 200px;
+    }
+
+    .head {
+        width: 140px;
+        height: 125px;
+    }
+
+    .ear {
+        width: 30px;
+        height: 40px;
+        top: -15px;
+    }
+
+    .ear.left-ear {
+        left: 12px;
+    }
+
+    .ear.right-ear {
+        right: 12px;
+    }
+
+    .eye {
+        width: 24px;
+        height: 10px;
+        top: 48px;
+    }
+
+    .eye.left-eye {
+        left: 28px;
+    }
+
+    .eye.right-eye {
+        right: 28px;
+    }
+
+    .nose {
+        width: 10px;
+        height: 8px;
+        top: 68px;
+    }
+
+    .mouth {
+        width: 16px;
+        height: 8px;
+        top: 76px;
+        margin-left: -8px;
+    }
+
+    .whisker {
+        width: 35px;
+    }
+
+    .whisker.left-whisker {
+        left: -10px;
+    }
+
+    .whisker.right-whisker {
+        right: -10px;
+    }
+
+    header h1 {
+        font-size: 1.8rem;
+    }
+
+    .cat-message {
+        font-size: 1rem;
+    }
+}
