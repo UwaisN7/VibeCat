@@ -7,7 +7,19 @@ const localSongs = [
 
     
 ];
+const fileInput = document.getElementById("fileInput");
 
+fileInput.addEventListener("change", function(event){
+
+    const file = event.target.files[0];
+
+    if(!file) return;
+
+    playLocalSong(URL.createObjectURL(file));
+
+    console.log("Playing:", file.name);
+
+});
 function displayLocalSongs() {
     const container = document.getElementById('localSongList');
     localSongs.forEach(song => {
