@@ -1,36 +1,100 @@
-/* ===== RESET & BASE and now starting to learn css boom baby ===== */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
-
+ 
+:root {
+    --sky-top: #0c0b1e;
+    --sky-bottom: #241a3d;
+    --moon-light: #e6e5e9;
+    --moon-mid: #434343;
+    --moon-dark: #0c0c0c;
+    --crater: rgba(0, 0, 0, 0.55);
+    --accent: #2f282d;
+    --accent-dark: #725878;
+    --text-soft: #af9bff;
+}
+ 
 body {
+    position: relative;
     min-height: 100vh;
+    overflow-x: hidden;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+    background: radial-gradient(ellipse at 50% 0%, var(--sky-bottom), var(--sky-top) 70%);
     color: #fff;
     padding: 20px;
 }
-main {
-  display: grid;
-  grid-template-columns: 220px 1fr;
-  gap: 20px;
-  min-height: 100vh;
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
+.row-container {
+  display: flex;
+  align-items: center;
+  gap: 15px; /* Adds space between the circle and the text */
 }
-/* ===== HEADER ===== */
+
+.circle-shape {
+  width: 50px;
+  height: 50px;
+  background-color: #2ecc71;
+  border-radius: 50%;
+}
+
+.side-text {
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+}
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+ 
+/* ===== STARFIELD ===== */
+.starfield {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+ 
+.star {
+    position: absolute;
+    background: #ffffff;
+    border-radius: 50%;
+    opacity: 0.2;
+    animation: twinkle ease-in-out infinite;
+}
+ 
+@keyframes twinkle {
+    0%, 100% { opacity: 0.15; transform: scale(1); }
+    50% { opacity: 0.9; transform: scale(1.4); }
+}
+ 
+@media (prefers-reduced-motion: reduce) {
+    .star {
+        animation: none;
+        opacity: 0.5;
+    }
+}
+ 
+/* ===== LAYOUT ===== */
 header {
+    position: relative;
+    z-index: 1;
     text-align: center;
     margin-bottom: 30px;
 }
-
+ 
 header h1 {
     font-size: 2.5rem;
     background: linear-gradient(135deg, #a78bfa, #8b5cf6);
@@ -38,304 +102,224 @@ header h1 {
     -webkit-text-fill-color: transparent;
     background-clip: text;
 }
-
-header p {
-    color: #c4b5fd;
+ 
+.tagline {
+    color: var(--text-soft);
     font-size: 1.1rem;
     opacity: 0.8;
+    margin-top: 0.5rem;
 }
-
-button{
-    
-    background-color: #ff17b5;
-    padding: 0.9rem;
-    margin: 1rem;
-    border-radius: 40px;
-    border: #1b08f0;
-    box-shadow: 0 10px 60px #8b5cf6;
-}
-
-button:hover{
-     transition: background-color 0.3s ease, color 0.3s ease;
-    background-color: #3b0148;
-}
-
-.side-bar{
+ 
+main {
+    position: relative;
+    z-index: 1;
     display: flex;
-   position: absolute;
-  justify-content: end;
-            width: 150px;
-            height: 100vh;
-            padding: 22px 16px;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;;
-
+    justify-content: center;
+    width: 100%;
 }
-#localSongList{
+ 
+.player-section {
     display: flex;
     flex-direction: column;
     align-items: center;
-     margin-left: 26px; 
-    padding: 40px;
-     min-height: 100vh;
-}
-/* ===== Cat Section ===== */
-.cat-section {
-  display: flex;
-
-  justify-content: center;
-  align-items: center;
-  
-  
-}
- 
-.cat-art {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-}
- 
-.cat {
-  position: relative;
-  width: 200px;
-  height: 200px;
-}
- 
-/* Ears */
-.ear {
-  position: absolute;
-  top: -20px;
-  width: 0;
-  height: 0;
-  border-left: 35px solid transparent;
-  border-right: 35px solid transparent;
-  border-bottom: 60px solid #9b4de0;
-  filter: drop-shadow(0 0 6px rgba(155, 77, 224, 0.6));
-}
- 
-.left-ear {
-  left: 10px;
-  transform: rotate(-15deg);
-}
- 
-.right-ear {
-  right: 10px;
-  transform: rotate(15deg);
-}
- 
-/* Head */
-.head {
-  position: relative;
-  width: 200px;
-  height: 180px;
-  background: linear-gradient(145deg, #b565f0, #7b2ff7);
-  border-radius: 50% 50% 45% 45%;
-  box-shadow: 0 0 25px rgba(155, 77, 224, 0.7), inset 0 -10px 20px rgba(0,0,0,0.15);
-  margin: 0 auto;
-}
- 
-/* Eyes */
-.eye {
-  position: absolute;
-  top: 70px;
-  width: 36px;
-  height: 36px;
-  background: #fff0ff;
-  border-radius: 50%;
-  box-shadow: 0 0 8px rgba(255,255,255,0.7);
-}
- 
-.left-eye {
-  left: 45px;
-}
- 
-.right-eye {
-  right: 45px;
-}
- 
-.pupil {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  width: 16px;
-  height: 16px;
-  background: #2a0a4a;
-  border-radius: 50%;
-}
- 
-/* Nose */
-.nose {
-  position: absolute;
-  top: 110px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 14px;
-  height: 10px;
-  background: #ff9de2;
-  border-radius: 50%;
-}
- 
-/* Mouth */
-.mouth {
-  position: absolute;
-  top: 122px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 40px;
-  height: 20px;
-  border-bottom: 3px solid #2a0a4a;
-  border-radius: 0 0 50% 50%;
-}
- 
-/* Whiskers */
-.whisker {
-  position: absolute;
-  top: 105px;
-  width: 60px;
-  height: 2px;
-  background: #f3e8ff;
-  opacity: 0.8;
-}
- 
-.left-whisker {
-  left: -50px;
-  transform: rotate(-8deg);
-}
- 
-.right-whisker {
-  right: -50px;
-  transform: rotate(8deg);
-}
- 
-
-/* --- Cat Message --- */
-.cat-message {
-    margin-top: 20px;
-    text-align: center;
-    font-size: 1.2rem;
-    color: #c4b5fd;
-    font-style: italic;
-}
-
-/* ===== PLAYER SECTION ===== */
-.player-section {
+    gap: 1.75rem;
     width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    max-width: 600px;
-   padding: 10px;
-    backdrop-filter: blur(6px)
+    max-width: 480px;
 }
-
+ 
+/* ===== BUTTONS ===== */
+button {
+    background-color: var(--accent);
+    color: #fff;
+    font-size: 1rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 40px;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 10px 40px rgba(139, 92, 246, 0.45);
+    transition: background-color 0.3s ease, transform 0.15s ease;
+}
+ 
+button:hover {
+    background-color: var(--accent-dark);
+}
+ 
+button:active {
+    transform: scale(0.97);
+}
+ 
+button:focus-visible,
+.moon-label:focus-visible,
+input:focus-visible {
+    outline: 2px solid var(--moon-light);
+    outline-offset: 3px;
+}
+ 
+/* ===== PLAYER ===== */
 .music-player {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    max-width: 500px;
-    border-radius: 30px;
+    width: 100%;
+    max-width: 420px;
+    border-radius: 24px;
     background: #1e1b2e;
-    box-shadow: 0 10px 40px rgba(108, 20, 249, 0.5);
-}
-.player-frame{
-    display: grid;
-   background: linear-gradient(30deg, #b508ac, #16b95f, #0c176c);
-   height: auto;
-   min-height: fit-content;
-    animation: shift 3s infinite;
-}
-@keyframes shift {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+   
 }
  
-/* ===== FOOTER ===== */
-footer {
-    text-align: center;
-    color: #6d6a8f;
-    font-size: 0.9rem;
-    padding: 20px 0;
-    border-top: 1px solid #2d2a4e;
+.youtube-embed {
     width: 100%;
-    max-width: 600px;
+    max-width: 420px;
+    aspect-ratio: 16 / 9;
+    border-radius: 24px;
+    overflow: hidden;
+   
 }
-
+ 
+.youtube-embed iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+ 
+/* ===== MOON DROP ZONE ===== */
+.moon-drop {
+    display: flex;
+    justify-content: center;
+}
+ 
+.moon-label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    cursor: pointer;
+}
+ 
+.moon {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, var(--moon-light), var(--moon-mid) 55%, var(--moon-dark) 100%);
+    box-shadow: 0 0 60px rgba(185, 185, 185, 0.55), inset 0 -14px 30px rgba(0, 0, 0, 0.25);
+    overflow: hidden;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+ 
+.moon-label:hover .moon,
+.moon-label:focus-visible .moon,
+.moon-drop.is-drag-over .moon {
+    transform: scale(1.05);
+    box-shadow: 0 0 90px rgba(180, 147, 247, 0.85), inset 0 -14px 30px rgba(0, 0, 0, 0.25);
+}
+ 
+.crater {
+    position: absolute;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, var(--crater), transparent 75%);
+}
+ 
+.crater--big {
+    width: 70px;
+    height: 70px;
+    top: 20px;
+    left: 30px;
+}
+ 
+.crater--medium {
+    width: 42px;
+    height: 42px;
+    top: 110px;
+}
+ 
+.crater--medium-left {
+    left: 20px;
+}
+ 
+.crater--medium-right {
+    right: 25px;
+    top: 60px;
+}
+ 
+.crater--small {
+    width: 26px;
+    height: 26px;
+    bottom: 20px;
+    left: 90px;
+}
+ 
+.drop-instructions {
+    color: var(--text-soft);
+    font-size: 0.95rem;
+    text-align: center;
+}
+ 
+/* ===== YOUTUBE INPUT ===== */
+.youtube-input {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6rem;
+}
+ 
+.youtube-input label {
+    color: var(--text-soft);
+    font-size: 0.95rem;
+}
+ 
+.youtube-input__row {
+    width: 100%;
+    display: flex;
+    gap: 0.6rem;
+}
+ 
+.youtube-input__row input {
+    flex: 1;
+    min-width: 0;
+    padding: 0.7rem 1rem;
+    border-radius: 40px;
+    border: 1px solid rgba(196, 181, 253, 0.4);
+    background: rgba(255, 255, 255, 0.06);
+    color: #fff;
+    font-size: 0.95rem;
+}
+ 
+.youtube-input__row input::placeholder {
+    color: rgba(196, 181, 253, 0.6);
+}
+ 
+.youtube-input__row button {
+    flex-shrink: 0;
+    padding: 0.7rem 1.4rem;
+}
+ 
+.youtube-error {
+    color: #ff8fd8;
+    font-size: 0.85rem;
+    text-align: center;
+}
+ 
+footer {
+    position: relative;
+    z-index: 1;
+    margin-top: 2.5rem;
+    color: var(--text-soft);
+    opacity: 0.6;
+    font-size: 0.85rem;
+}
+ 
 /* ===== RESPONSIVE ===== */
-@media (max-width: 600px) {
-    .cat-art {
-        width: 200px;
-        height: 200px;
+@media (max-width: 480px) {
+    .moon {
+        width: 160px;
+        height: 160px;
     }
-
-    .head {
-        width: 140px;
-        height: 125px;
+ 
+    .crater--big { width: 56px; height: 56px; top: 16px; left: 24px; }
+    .crater--medium { width: 34px; height: 34px; top: 88px; }
+    .crater--medium-right { top: 46px; }
+    .crater--small { width: 20px; height: 20px; bottom: 16px; left: 70px; }
+ 
+    .youtube-input__row {
+        flex-direction: column;
     }
-
-    .ear {
-        width: 30px;
-        height: 40px;
-        top: -15px;
-    }
-
-    .ear.left-ear {
-        left: 12px;
-    }
-
-    .ear.right-ear {
-        right: 12px;
-    }
-
-    .eye {
-        width: 24px;
-        height: 10px;
-        top: 48px;
-    }
-
-    .eye.left-eye {
-        left: 28px;
-    }
-
-    .eye.right-eye {
-        right: 28px;
-    }
-
-    .nose {
-        width: 10px;
-        height: 8px;
-        top: 68px;
-    }
-
-    .mouth {
-        width: 16px;
-        height: 8px;
-        top: 76px;
-        margin-left: -8px;
-    }
-
-    .whisker {
-        width: 35px;
-    }
-
-    .whisker.left-whisker {
-        left: -10px;
-    }
-
-    .whisker.right-whisker {
-        right: -10px;
-    }
-
-    header h1 {
-        font-size: 1.8rem;
-    }
-
-    #fileInput{
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
 }
