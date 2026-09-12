@@ -35,25 +35,30 @@
                     class="visually-hidden"
                     accept="audio/*,video/*"
                     aria-describedby="dropInstructions">
-                <label for="fileInput" class="moon-label">
-                     <div class="circle-text-container">
-             <svg viewBox="0 0 100 100" width="200" height="200">
-    <path id="circlePath" d="M 50, 50 m -40, 0 a 40,40 0 1,1 80,0 a 40,40 0 1,1 -80,0" fill="purple" />
-    <text>
-      <textPath href="#circlePath" startOffset="25%" text-anchor="middle">
-     Drop Your Song
-      </textPath>
-    </text>
-  </svg>
-</div>
-                    <span class="moon">
-                        <span class="crater crater--big"></span>
-                        <span class="crater crater--medium crater--medium-left"></span>
-                        <span class="crater crater--medium crater--medium-right"></span>
-                        <span class="crater crater--small"></span>
-                    </span>
-                   
-                </label>
+               <label for="fileInput" class="moon-label">
+    <div class="moon-wrap">
+        <span class="moon">
+            <span class="crater crater--big"></span>
+            <span class="crater crater--medium crater--medium-left"></span>
+            <span class="crater crater--medium crater--medium-right"></span>
+            <span class="crater crater--small"></span>
+        </span>
+
+        <svg class="moon-ring" viewBox="0 0 200 200" aria-hidden="true">
+            <defs>
+                <path id="circlePath"
+                      d="M 100,100 m -85,0 a 85,85 0 1,1 170,0 a 85,85 0 1,1 -170,0"
+                      fill="none" />
+            </defs>
+            <text class="moon-ring__text">
+                <textPath href="#circlePath" startOffset="25%" text-anchor="middle">
+                    Drop Your Song
+                </textPath>
+            </text>
+        </svg>
+    </div>
+</label>
+                
             </div>
  
             <div class="youtube-input">

@@ -5,8 +5,8 @@
 }
  
 :root {
-    --sky-top: #0c0b1e;
-    --sky-bottom: #241a3d;
+    --sky-top: #000000;
+    --sky-bottom: #272729;
     --moon-light: #e6e5e9;
     --moon-mid: #434343;
     --moon-dark: #0c0c0c;
@@ -24,10 +24,11 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+   /* i decide the font fam*/
     background: radial-gradient(ellipse at 50% 0%, var(--sky-bottom), var(--sky-top) 70%);
     color: #fff;
-    padding: 20px;
+    padding: 15px;
+    padding-bottom:150px ;
 }
 .row-container {
   display: flex;
@@ -42,10 +43,6 @@ body {
   border-radius: 50%;
 }
 
-.side-text {
-  font-family: Arial, sans-serif;
-  font-size: 16px;
-}
 .visually-hidden {
     position: absolute;
     width: 1px;
@@ -97,12 +94,16 @@ header {
  
 header h1 {
     font-size: 2.5rem;
-    background: linear-gradient(135deg, #a78bfa, #8b5cf6);
+    background: linear-gradient(2000deg, #cbc8d4, #2f2f2f);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
 }
- 
+ #main-heading{
+    padding: 50px;
+    margin: 10px;
+    
+ }
 .tagline {
     color: var(--text-soft);
     font-size: 1.1rem;
@@ -136,7 +137,6 @@ button {
     border-radius: 40px;
     border: none;
     cursor: pointer;
-    box-shadow: 0 10px 40px rgba(139, 92, 246, 0.45);
     transition: background-color 0.3s ease, transform 0.15s ease;
 }
  
@@ -192,17 +192,54 @@ input:focus-visible {
     gap: 1rem;
     cursor: pointer;
 }
- 
+ .moon-wrap {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 .moon {
     position: relative;
     width: 200px;
     height: 200px;
+    inset: 0;
     border-radius: 50%;
     background: radial-gradient(circle at 35% 30%, var(--moon-light), var(--moon-mid) 55%, var(--moon-dark) 100%);
     box-shadow: 0 0 60px rgba(185, 185, 185, 0.55), inset 0 -14px 30px rgba(0, 0, 0, 0.25);
     overflow: hidden;
     transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
+
+
+
+
+.moon-ring {
+    position: absolute;
+    inset: -30px;             
+    width: calc(100% + 60px);
+    height: calc(100% + 60px);
+    pointer-events: none;    
+    animation: spin 20s linear infinite; 
+}
+
+.moon-ring__text {
+    fill: var(--text-soft);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .moon-ring { animation: none; }
+}
+
  
 .moon-label:hover .moon,
 .moon-label:focus-visible .moon,
