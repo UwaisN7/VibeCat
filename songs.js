@@ -3,11 +3,21 @@ const localSongs = [
     { title: "Paparazzi", file: "Songs/Nightcore - Paparazzi (Lyrics).mp4" },
      {  title:"Outside",file:"Songs/Nightcore - Outside (Lyrics).mp4"},
      {title:"NeverGoingHomeTonighttttt", file:"Songs/Nightcore - Never Going Home Tonight (Lyrics).mp4" },
-     {title:"WhereHaveYouBeeen", file:"Songs/Nightcore - Where Have You Been (Lyrics).mp4" }
-
-    
+     {title:"WhereHaveYouBeeen", file:"Songs/Nightcore - Where Have You Been (Lyrics).mp4" }   
 ];
+const fileInput = document.getElementById("fileInput");
 
+fileInput.addEventListener("change", function(event){
+
+    const file = event.target.files[0];
+
+    if(!file) return;
+
+    playLocalSong(URL.createObjectURL(file));
+
+    console.log("Playing:", file.name);
+
+});
 function displayLocalSongs() {
     const container = document.getElementById('localSongList');
     localSongs.forEach(song => {
@@ -21,7 +31,7 @@ function displayLocalSongs() {
 function playLocalSong(file) {
     const player = document.querySelector('.music-player');
 
-    // Swap the source and reload the element
+
     player.src = file;
     player.load();
     player.play();
