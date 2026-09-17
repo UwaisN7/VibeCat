@@ -8,6 +8,9 @@
     <title>VibeCat Music Studio</title>
     <link rel="stylesheet" href="style.css">
     <script src="songs.js" defer></script>
+    
+    <script src="moondrop.js" defer></script>
+    <script src="youtubeApi.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 </head>
 <body>
@@ -78,106 +81,8 @@
     </main>
  
     <footer>
-     
+     Dirchhhhh
     </footer>
- 
-    <script>
-      
-        (function generateStars() {
-            const field = document.getElementById('starfield');
-            const STAR_COUNT = 500;
-            const fragment = document.createDocumentFragment();
- 
-            for (let i = 0; i < STAR_COUNT; i++) {
-                const star = document.createElement('span');
-                star.className = 'star';
-                star.style.top = `${Math.random() * 100}%`;
-                star.style.left = `${Math.random() * 100}%`;
- 
-                const size = (Math.random() * 2 + 1).toFixed(2); // between 1px and 3px
-                star.style.width = `${size}px`;
-                star.style.height = `${size}px`;
- 
-                star.style.animationDelay = `${(Math.random() * 4).toFixed(2)}s`;
-                star.style.animationDuration = `${(Math.random() * 3 + 2).toFixed(2)}s`;
- 
-                fragment.appendChild(star);
-            }
-            field.appendChild(fragment);
-        })();
- 
-        // ---- 2. Moon as a drop zone ----
-        // The <label for="fileInput"> already makes clicking the moon open the
-        // file picker for free - that's just normal HTML behaviour, no JS needed.
-        // Drag-and-drop needs a little help though: we add a class for visual
-        // feedback, and forward any dropped file into the real <input> so
-        // songs.js (which already listens for "change" on #fileInput) can
-        // pick it up without knowing anything about drag-and-drop.
-        (function setupMoonDrop() {
-            const dropZone = document.getElementById('dropZone');
-            const fileInput = document.getElementById('fileInput');
- 
-            ['dragenter', 'dragover'].forEach(evt =>
-                dropZone.addEventListener(evt, (e) => {
-                    e.preventDefault();
-                    dropZone.classList.add('is-drag-over');
-                })
-            );
- 
-            ['dragleave', 'drop'].forEach(evt =>
-                dropZone.addEventListener(evt, (e) => {
-                    e.preventDefault();
-                    dropZone.classList.remove('is-drag-over');
-                })
-            );
- 
-            dropZone.addEventListener('drop', (e) => {
-                const files = e.dataTransfer.files;
-                if (files && files.length) {
-                    fileInput.files = files;
-                    fileInput.dispatchEvent(new Event('change', { bubbles: true }));
-                }
-            });
-        })();
- 
-        // ---- 3. YouTube link loader ----
-        // This is the simplest form of the YouTube embed: we pull the 11-character
-        // video id out of whatever URL shape the user pastes, then build an
-        // https://www.youtube.com/embed/<id> iframe. It only works if the video's
-        // owner has allowed embedding. Swapping this for the full YouTube IFrame
-        // Player API later (for things like reading play/pause state) is a
-        // straightforward next step once this is wired up.
-        (function setupYoutubeLoader() {
-            const linkInput = document.getElementById('youtubeLink');
-            const loadButton = document.getElementById('loadYoutube');
-            const errorMessage = document.getElementById('youtubeError');
-            const embedContainer = document.getElementById('youtubeEmbed');
-            const player = document.getElementById('musicPlayer');
- 
-            function extractVideoId(url) {
-                const match = url.match(/(?:youtu\.be\/|v=|embed\/)([\w-]{11})/);
-                return match ? match[1] : null;
-            }
- 
-            loadButton.addEventListener('click', () => {
-                const videoId = extractVideoId(linkInput.value.trim());
- 
-                if (!videoId) {
-                    errorMessage.textContent = "That doesn't look like a YouTube link — try pasting the full video URL.";
-                    errorMessage.hidden = false;
-                    return;
-                }
- 
-                errorMessage.hidden = true;
-                player.hidden = true;
-                embedContainer.hidden = false;
-                embedContainer.innerHTML = `<iframe
-                    src="https://www.youtube.com/embed/${videoId}?autoplay=1"
-                    title="YouTube video player"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowfullscreen></iframe>`;
-            });
-        })();
-    </script>
+ <script src="stars.js" defer></script>
 </body>
 </html>
