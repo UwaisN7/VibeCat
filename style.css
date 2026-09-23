@@ -7,13 +7,14 @@
 :root {
     --sky-top: #000000;
     --sky-bottom: #272729;
-    --moon-light: #e6e5e9;
-    --moon-mid: #434343;
-    --moon-dark: #0c0c0c;
-    --crater: rgba(0, 0, 0, 0.55);
-    --accent: #2f282d;
-    --accent-dark: #725878;
-    --text-soft: #af9bff;
+    --moon-light: #fcfcfc;
+    --moon-mid: #5D3D7B;
+    
+    --moon-dark: #6E3862;
+    --crater: #282828;
+    --accent: #6E3862;
+    --accent-soft: #000000;
+    --text-soft: #C68FE8;
 }
  
 body {
@@ -24,7 +25,7 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-   /* i decide the font fam*/
+   
     background: radial-gradient(ellipse at 50% 0%, var(--sky-bottom), var(--sky-top) 70%);
     color: #fff;
     padding: 15px;
@@ -33,7 +34,7 @@ body {
 .row-container {
   display: flex;
   align-items: center;
-  gap: 15px; /* Adds space between the circle and the text */
+  gap: 15px; 
 }
 
 .circle-shape {
@@ -55,7 +56,7 @@ body {
     border: 0;
 }
  
-/* ===== STARFIELD ===== */
+
 .starfield {
     position: fixed;
     inset: 0;
@@ -84,7 +85,6 @@ body {
     }
 }
  
-/* ===== LAYOUT ===== */
 header {
     position: relative;
     z-index: 1;
@@ -94,14 +94,16 @@ header {
  
 header h1 {
     font-size: 2.5rem;
-    background: linear-gradient(2000deg, #cbc8d4, #2f2f2f);
+    background: linear-gradient(200deg, #5D3D7B, #C68FE8);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
 }
  #main-heading{
-    padding: 50px;
-    margin: 10px;
+  
+    padding: 25px;
+    margin: 15px;
+
     
  }
 .tagline {
@@ -128,7 +130,7 @@ main {
     max-width: 480px;
 }
  
-/* ===== BUTTONS ===== */
+
 button {
     background-color: var(--accent);
     color: #fff;
@@ -155,12 +157,12 @@ input:focus-visible {
     outline-offset: 3px;
 }
  
-/* ===== PLAYER ===== */
+
 .music-player {
     width: 100%;
     max-width: 420px;
     border-radius: 24px;
-    background: #1e1b2e;
+    background: #282828;
    
 }
  
@@ -179,7 +181,7 @@ input:focus-visible {
     border: 0;
 }
  
-/* ===== MOON DROP ZONE ===== */
+
 .moon-drop {
     display: flex;
     justify-content: center;
@@ -207,7 +209,7 @@ input:focus-visible {
     inset: 0;
     border-radius: 50%;
     background: radial-gradient(circle at 35% 30%, var(--moon-light), var(--moon-mid) 55%, var(--moon-dark) 100%);
-    box-shadow: 0 0 60px rgba(185, 185, 185, 0.55), inset 0 -14px 30px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 0 60px #6E3862, inset 0 -14px 30px rgba(0, 0, 0, 0.25);
     overflow: hidden;
     transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
@@ -245,7 +247,7 @@ input:focus-visible {
 .moon-label:focus-visible .moon,
 .moon-drop.is-drag-over .moon {
     transform: scale(1.05);
-    box-shadow: 0 0 90px rgba(180, 147, 247, 0.85), inset 0 -14px 30px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 0 90px #B06BF1, inset 0 -14px 30px rgba(0, 0, 0, 0.25);
 }
  
 .crater {
@@ -289,9 +291,10 @@ input:focus-visible {
     text-align: center;
 }
  
-/* ===== YOUTUBE INPUT ===== */
+
 .youtube-input {
     width: 100%;
+    margin-top:20px ;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -316,7 +319,7 @@ input:focus-visible {
     border-radius: 40px;
     border: 1px solid rgba(196, 181, 253, 0.4);
     background: rgba(255, 255, 255, 0.06);
-    color: #fff;
+    color: #B06BF1;
     font-size: 0.95rem;
 }
  
@@ -330,11 +333,35 @@ input:focus-visible {
 }
  
 .youtube-error {
-    color: #ff8fd8;
+    color: #f15743;
     font-size: 0.85rem;
     text-align: center;
 }
- 
+#loadYoutube{
+       background: #6E3862;
+    color: #fff;
+    font-size: 1rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 40px;
+    border: 1px solid rgba(198, 143, 232, 0.35);
+    cursor: pointer;
+    transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.15s ease;
+    box-shadow: 0 0 14px rgba(176, 107, 241, 0.35);
+
+}
+ #loadYoutube:hover {
+    background: #3d3c3c;
+    box-shadow: 0 0 22px #C68FE8;
+}
+
+#loadYoutube:active {
+    transform: scale(0.97);
+}
+
+#loadYoutube:focus-visible {
+    outline: 2px solid var(--moon-light);
+    outline-offset: 3px;
+}
 footer {
     position: relative;
     z-index: 1;
@@ -344,7 +371,7 @@ footer {
     font-size: 0.85rem;
 }
  
-/* ===== RESPONSIVE ===== */
+
 @media (max-width: 480px) {
     .moon {
         width: 160px;
