@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="VibeCat Music - drop a song on the moon or paste a YouTube link and press play.">
+    <meta name="keywords" content="music player, cat, vibecat, purple cat, youtube player">
+    <title>VibeCat Music Studio</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="songs.js" defer></script>
+    <script src="stars.js" defer></script>
+    <script src="moondrop.js" defer></script>
+    <script src="youtubeApi.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+</head>
+<body>
+    <header>
+        <h1 class="visually-hidden">VibeCat Music &mdash; customise your night sky visualiser</h1>
+    </header>
+    <main class="scene">
+        <div class="starfield" aria-hidden="true"></div>
+
+        <section class="custom-buttons" aria-label="Visualiser settings">
+            <button type="button" class="setting sensitivity">Sensitivity</button>
+            <button type="button" class="setting particles">Particles</button>
+            <button type="button" class="setting colour">Colour</button>
+            <button type="button" class="setting frequency">Frequency</button>
+        </section>
+
+        <div class="ground" aria-hidden="true">
+            <svg viewBox="0 0 315 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <ellipse cx="157.5" cy="50.5" rx="157.5" ry="50.5" fill="#3B2C46"/>
+            </svg>
+        </div>
+
+        <!-- Single path so the same "d" can later drive a scroll-linked
+             walker with offset-path / GSAP ScrollTrigger. Dasharray turns
+             the stroke into rounded stepping stones instead of a solid line. -->
+        <svg class="pathway" viewBox="0 0 800 600" preserveAspectRatio="none" aria-hidden="true">
+            <path class="pathway-line"
+                  d="M30,600 C160,555 100,465 235,445 C365,425 315,365 470,355"
+                  fill="none" stroke="#C9B8DE" stroke-width="16"
+                  stroke-linecap="round" stroke-dasharray="0 36"/>
+        </svg>
+
+        <div class="house">
+            <div class="house-roof">
+                <svg viewBox="0 0 57 39" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M28.1458 0L56.2916 38.25H-1.33514e-05L28.1458 0Z" fill="#6E3862"/>
+                </svg>
+            </div>
+            <div class="house-base">
+                <svg viewBox="0 0 54 54" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="54" height="54" fill="#B8AEC4"/>
+                </svg>
+                <div class="house-door">
+                    <svg viewBox="0 0 24 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="24" height="35" fill="#1A1420"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer></footer>
+</body>
+
+</html>
