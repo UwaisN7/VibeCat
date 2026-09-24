@@ -370,7 +370,127 @@ footer {
     opacity: 0.6;
     font-size: 0.85rem;
 }
- 
+ /*(Page 2 — house-on-a-hill scene*/
+ :root {
+    --hill: #3B2C46;
+    --house-wall: #B8AEC4;
+    --house-roof: #6E3862;
+    --house-door: #1A1420;
+    --path-stone: #C9B8DE;
+}
+
+.scene {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    min-height: 520px;
+    overflow: hidden;
+}
+
+/* Controls stay put while the page scrolls */
+.custom-buttons {
+    position: fixed;
+    top: 1.75rem;
+    left: 1.75rem;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+.custom-buttons button {
+    font-size: 0.85rem;
+    padding: 0.6rem 1.2rem;
+    text-align: left;
+    background: rgba(40, 40, 40, 0.55);
+    border: 1px solid rgba(198, 143, 232, 0.25);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+}
+
+.custom-buttons button:hover {
+    background: var(--accent);
+    box-shadow: 0 0 16px rgba(176, 107, 241, 0.35);
+}
+
+/* Oversized + overflowing so it reads as ground, not a shape floating mid-page */
+.ground {
+    position: absolute;
+    bottom: -22vh;
+    left: 50%;
+    width: 130vw;
+    transform: translateX(-50%);
+    z-index: 1;
+    filter: drop-shadow(0 -6px 18px rgba(0, 0, 0, 0.35));
+}
+
+.ground svg {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.pathway {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* Slightly right of centre, sitting on the hill's shoulder */
+.house {
+    position: absolute;
+    bottom: 50vh;
+    left: 80%;
+    width: clamp(100px, 16vw, 170px);
+    transform: translateX(-50%);
+    z-index: 2;
+    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.4));
+}
+
+.house-roof svg,
+.house-base svg,
+.house-door svg {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.house-roof {
+    margin-bottom: -2px; 
+}
+
+.house-base {
+    position: relative;
+}
+
+.house-door {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 34%;
+    transform: translateX(-50%);
+}
+
+@media (max-width: 480px) {
+    .custom-buttons {
+        top: 1rem;
+        left: 1rem;
+        gap: 0.4rem;
+    }
+
+    .custom-buttons button {
+        font-size: 0.75rem;
+        padding: 0.5rem 0.9rem;
+    }
+
+    .house {
+        bottom: 22vh;
+        left: 62%;
+    }
+}
 
 @media (max-width: 480px) {
     .moon {
