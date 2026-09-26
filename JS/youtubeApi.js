@@ -172,15 +172,15 @@ function showMessage(text, type) {
   messageBox.className = `youtube-error is-${type}`;
 }
  
-function lockScroll() {
-  document.body.classList.add('scroll-locked');
-  document.body.classList.remove('scroll-unlocked');
-}
+// function lockScroll() {
+//   document.body.classList.add('scroll-locked');
+//   document.body.classList.remove('scroll-unlocked');
+// }
  
-function unlockScroll() {
-  document.body.classList.remove('scroll-locked');
-  document.body.classList.add('scroll-unlocked');
-}
+// function unlockScroll() {
+//   document.body.classList.remove('scroll-locked');
+//   document.body.classList.add('scroll-unlocked');
+// }
  
 function hideEmbed() {
   if (ytPlayer && ytPlayer.destroy) {
@@ -197,7 +197,7 @@ async function handleLoad() {
   const rawLink = linkInput.value.trim();
  
   hideEmbed();
-  lockScroll();
+   lockScroll();
  
   if (!rawLink) {
     showMessage('Paste a YouTube link first.', 'error');
@@ -240,15 +240,14 @@ async function handleLoad() {
   localPlayer.pause();
   localPlayer.hidden = true;
   unlockScroll();
+  
+  
   showMessage(
     `NICE! "${info.title}" is good to go. Scroll is unlocked ${info.warning}`.trim(),
     'ok'
   );
 }
- 
- 
 
-lockScroll(); 
  
 loadButton.addEventListener('click', handleLoad);
 linkInput.addEventListener('keydown', (e) => {

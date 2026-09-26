@@ -7,22 +7,23 @@
     <meta name="keywords" content="music player, cat, vibecat, purple cat, youtube player">
     <title>VibeCat Music Studio</title>
     <link rel="stylesheet" href="style.css">
-    <script src="songs.js" defer></script>
-    
-    <script src="moondrop.js" defer></script>
-    <script src="youtubeApi.js" defer></script>
+
+    <script src="../JS/songStore.js" defer></script>
+    <script src="../JS/songs.js" defer></script>
+
+    <script src="../JS/moondrop.js" defer></script>
+    <script src="../JS/youtubeApi.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 </head>
 <body>
-    
+    <div id="curtain" aria-hidden="true"></div>
     <div class="starfield" id="starfield" aria-hidden="true"></div>
  
     <header>
         <h1 id="main-heading">😺 VibeCat Music</h1>
        
-       
+        <p id="youtubeError" class="youtube-error" role="alert" hidden></p>
     </header>
- 
     <main>
         <section class="player-section">
             <h2 id="upload-heading" class="visually-hidden">Add a song to play</h2>
@@ -74,7 +75,7 @@
                         placeholder="https://youtube.com/watch…">
                     <button type="button" id="loadYoutube">Load</button>
                 </div>
-                <p id="youtubeError" class="youtube-error" role="alert" hidden></p>
+                <!-- <p id="youtubeError" class="youtube-error" role="alert" hidden></p> -->
             </div>
         </section>
     </main>
@@ -82,6 +83,8 @@
     <footer>
      Comment idk how to comment in html but basically when the user does their thing a notification will pop up here telling them they can scroll down.
     </footer>
- <script src="stars.js" defer></script>
+    <div style="height: 200vh; background: transparent;"></div>
+    <script src="../JS/loadScreen.js"></script>
+ <script src="../JS/stars.js" defer></script>
 </body>
 </html>

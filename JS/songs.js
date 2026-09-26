@@ -14,17 +14,20 @@ fileInput.addEventListener("change", function(event){
 });
 
 
-function playLocalSong(file) {
-    const player = document.querySelector('.music-player');
-
-
+async function playLocalSong(file) {
+  const player = document.querySelector('.music-player');
     player.src = file;
     player.load();
-    player.play();
-    player.muted = false;
-
-    
+    try {
+        await player.play();
+        unlockScroll();      
+    } catch (err) {
+        console.error("Couldn't play that file:", err);
+       
+    }
   
 }
+
+
 
 
