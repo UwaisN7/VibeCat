@@ -7,16 +7,22 @@
     <meta name="keywords" content="music player, cat, vibecat, purple cat, youtube player">
     <title>VibeCat Music Studio</title>
     <link rel="stylesheet" href="style.css">
-
+    <link rel="stylesheet" href="settings.css">
+  
     <script src="../JS/songStore.js" defer></script>
     <script src="../JS/songs.js" defer></script>
-
     <script src="../JS/moondrop.js" defer></script>
     <script src="../JS/youtubeApi.js" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+     
+    
 </head>
 <body>
-    <div id="curtain" aria-hidden="true"></div>
+    <div id="curtain" aria-hidden="true"><div class="curtain-loader">
+        <span class="curtain-loader__text">Loading</span>
+        <span class="curtain-loader__dots">
+            <span></span><span></span><span></span>
+        </span>
+    </div></div>
     <div class="starfield" id="starfield" aria-hidden="true"></div>
  
     <header>
@@ -81,10 +87,12 @@
     </main>
  
     <footer>
-     Comment idk how to comment in html but basically when the user does their thing a notification will pop up here telling them they can scroll down.
+    
     </footer>
-    <div style="height: 200vh; background: transparent;"></div>
+   
     <script src="../JS/loadScreen.js"></script>
- <script src="../JS/stars.js" defer></script>
+ <script src="../JS/stars.js" defer></script> 
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+   <script src="../JS/grass.js" defer></script>
 </body>
 </html>

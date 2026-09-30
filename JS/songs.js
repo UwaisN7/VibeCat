@@ -15,19 +15,25 @@ fileInput.addEventListener("change", function(event){
 
 
 async function playLocalSong(file) {
-  const player = document.querySelector('.music-player');
+  const player = document.querySelector('.music-player') || document.getElementById('musicPlayer');
+  
+  if (!player) {
+    console.error("No player element found");
+    unlockScroll();
+    return;
+  }
+
+  try {
     player.src = file;
     player.load();
-    try {
-        await player.play();
-        unlockScroll();      
-    } catch (err) {
-        console.error("Couldn't play that file:", err);
-       
-    }
-  
+    await player.play();
+    console.log("Playing, unlocking scroll");
+    unlockScroll();
+  } catch (err) {
+    console.error("Couldn't play that file:", err);
+    unlockScroll();  
+  }
 }
-
 
 
 

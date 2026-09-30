@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="VibeCat Music - customise your night sky visualiser.">
+    <meta name="keywords" content="music player, cat, vibecat, purple cat, visualiser">
+    <title>VibeCat Music Studio</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../settings.css">
+    <script src="../JS/stars.js" defer></script>
+</head>
+<body>
+    <div class="starfield" id="starfield" aria-hidden="true"></div>
+
+    <header>
+        <h1 class="visually-hidden">VibeCat Music &mdash; customise your night sky visualiser</h1>
+    </header>
+
+    <main class="scene">
+        <div class="sky-moon" aria-hidden="true"></div>
+        <canvas id="aurora" aria-hidden="true"></canvas>
+
+        <section class="panel" aria-label="Visualiser settings">
+            <h2>😺 Visualiser</h2>
+            <p class="hint">Preview runs on a fake beat.</p>
+
+            <div class="control">
+                <div class="control__head"><label for="sens">Sensitivity</label><output id="sensOut"></output></div>
+                <input type="range" id="sens" min="0" max="100">
+            </div>
+            <div class="control">
+                <div class="control__head"><label for="parts">Particles</label><output id="partsOut"></output></div>
+                <input type="range" id="parts" min="0" max="100">
+            </div>
+            <div class="control">
+                <div class="control__head"><label for="freq">Frequency</label><output id="freqOut"></output></div>
+                <input type="range" id="freq" min="0" max="100">
+            </div>
+            <div class="control">
+                <div class="control__head"><span>Colour</span></div>
+                <div class="swatches" role="group" aria-label="Wave colour">
+                    <button type="button" class="swatch" style="--c:#C68FE8" data-c="#C68FE8" aria-label="Lilac"></button>
+                    <button type="button" class="swatch" style="--c:#B06BF1" data-c="#B06BF1" aria-label="Violet"></button>
+                    <button type="button" class="swatch" style="--c:#E58FD0" data-c="#E58FD0" aria-label="Orchid"></button>
+                    <button type="button" class="swatch" style="--c:#8F8BFF" data-c="#8F8BFF" aria-label="Periwinkle"></button>
+                    <button type="button" class="swatch" style="--c:#7EE0D6" data-c="#7EE0D6" aria-label="Aqua"></button>
+                </div>
+            </div>
+
+            <a class="back-link" href="../index.html">&larr; Back to player</a>
+        </section>
+
+        <!-- back hill -->
+        <div class="ground ground--back" aria-hidden="true">
+            <svg viewBox="0 0 315 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <ellipse cx="157.5" cy="50.5" rx="157.5" ry="50.5" fill="#241a2e"/>
+            </svg>
+        </div>
+
+        <!-- front hill: gradient body + lilac rim light -->
+        <div class="ground" aria-hidden="true">
+            <svg viewBox="0 0 315 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <linearGradient id="hillFill" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0" stop-color="#5a4570"/>
+                        <stop offset=".35" stop-color="#3B2C46"/>
+                        <stop offset="1" stop-color="#160f1d"/>
+                    </linearGradient>
+                </defs>
+                <ellipse cx="157.5" cy="50.5" rx="157.5" ry="50.5" fill="url(#hillFill)"/>
+                <path d="M4 42 C50 6 265 6 311 42" stroke="#C68FE8" stroke-opacity=".35" stroke-width="1.2" stroke-linecap="round"/>
+            </svg>
+        </div>
+
+        <svg class="pathway" viewBox="0 0 800 600" preserveAspectRatio="none" aria-hidden="true">
+            <path class="pathway-line"
+                  d="M30,600 C160,555 100,465 235,445 C365,425 315,365 610,330"
+                  fill="none" stroke="#C9B8DE" stroke-width="16"
+                  stroke-linecap="round" stroke-dasharray="0 36"/>
+        </svg>
+
+        <div class="house">
+            <div class="house-roof">
+                <svg viewBox="0 0 57 39" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M28.1458 0L56.2916 38.25H-1.33514e-05L28.1458 0Z" fill="#6E3862"/>
+                </svg>
+                <svg class="roof-cat" viewBox="0 0 40 36" aria-hidden="true">
+                    <path class="roof-cat__tail" d="M6 30 C-4 28 -2 14 6 12" fill="none" stroke="#1A1420" stroke-width="3.5" stroke-linecap="round"/>
+                    <ellipse cx="17" cy="28" rx="13" ry="8" fill="#1A1420"/>
+                    <circle cx="29" cy="16" r="8" fill="#1A1420"/>
+                    <path d="M22 11 L23 2 L28 8 Z M30 8 L35 2 L36 12 Z" fill="#1A1420"/>
+                    <circle cx="26.5" cy="16" r="1.6" fill="#EBD5FF"/>
+                    <circle cx="32.5" cy="16" r="1.6" fill="#EBD5FF"/>
+                </svg>
+            </div>
+            <div class="house-base">
+                <svg viewBox="0 0 54 54" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="54" height="54" fill="#B8AEC4"/>
+                </svg>
+                <div class="house-window"></div>
+                <div class="house-door">
+                    <svg viewBox="0 0 24 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="24" height="35" fill="#1A1420"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer></footer>
+
+    <script>
+    // ---- settings (saved so index.html / the real visualiser can read them) ----
+    const KEY = 'vibecat-settings';
+    const S = { sens: 60, parts: 50, freq: 50, colour: '#C68FE8' };
+    try { Object.assign(S, JSON.parse(localStorage.getItem(KEY)) || {}); } catch (e) {}
+
+    const root = document.documentElement;
+    const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function apply() {
+        root.style.setProperty('--glow', S.colour);
+        for (const k of ['sens', 'parts', 'freq']) {
+            const el = document.getElementById(k);
+            el.value = S[k];
+            el.style.setProperty('--fill', S[k] + '%');
+            document.getElementById(k + 'Out').textContent = S[k] + '%';
+        }
+        document.querySelectorAll('.swatch').forEach(b =>
+            b.setAttribute('aria-pressed', b.dataset.c === S.colour));
+        try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {}
+    }
+    for (const k of ['sens', 'parts', 'freq'])
+        document.getElementById(k).addEventListener('input', e => { S[k] = +e.target.value; apply(); });
+    document.querySelectorAll('.swatch').forEach(b =>
+        b.addEventListener('click', () => { S.colour = b.dataset.c; apply(); }));
+    apply();
+
+    // ---- live preview: aurora ribbons + rising particles ----
+    const cv = document.getElementById('aurora'), ctx = cv.getContext('2d');
+    let W, H;
+    function resize() {
+        const d = devicePixelRatio || 1;
+        W = cv.clientWidth; H = cv.clientHeight;
+        cv.width = W * d; cv.height = H * d;
+        ctx.setTransform(d, 0, 0, d, 0, 0);
+    }
+    addEventListener('resize', resize); resize();
+
+    const dots = Array.from({ length: 120 }, () => ({
+        x: Math.random(), y: Math.random(), v: .05 + Math.random() * .12, r: 1 + Math.random() * 2.2
+    }));
+
+    let t = 0, last = performance.now();
+    function frame(now) {
+        const dt = Math.min((now - last) / 1000, .05); last = now;
+        if (!still) t += dt;
+        // fake beat: pulses roughly twice a second
+        const beat = .3 + .7 * Math.pow(Math.abs(Math.sin(t * 3.1)), 3);
+        const amp = beat * (S.sens / 100);
+        root.style.setProperty('--beat', (still ? 0 : amp).toFixed(2));
+        const k = .003 + (S.freq / 100) * .012;
+
+        ctx.clearRect(0, 0, W, H);
+        ctx.lineWidth = 3;
+        ctx.lineCap = 'round';
+        ctx.strokeStyle = S.colour;
+        ctx.shadowColor = S.colour;
+        ctx.shadowBlur = 18;
+        for (let i = 0; i < 3; i++) {
+            ctx.globalAlpha = .75 - i * .22;
+            ctx.beginPath();
+            for (let x = 0; x <= W; x += 8) {
+                const y = H * (.3 + i * .05)
+                        + Math.sin(x * k + t * (1 + i * .4) + i * 2) * (14 + amp * 70)
+                        + Math.sin(x * k * 2.3 - t * 1.3) * amp * 22;
+                x ? ctx.lineTo(x, y) : ctx.moveTo(x, y);
+            }
+            ctx.stroke();
+        }
+
+        ctx.shadowBlur = 8;
+        ctx.fillStyle = S.colour;
+        const n = Math.round(S.parts * 1.2);
+        for (let i = 0; i < n; i++) {
+            const p = dots[i];
+            if (!still) p.y -= p.v * dt * (1 + amp * 3);
+            if (p.y < 0) { p.y = 1; p.x = Math.random(); }
+            ctx.globalAlpha = .25 + .55 * (p.y);
+            ctx.beginPath();
+            ctx.arc(p.x * W + Math.sin(t + i) * 10, p.y * H, p.r * (1 + amp), 0, 6.283);
+            ctx.fill();
+        }
+        ctx.globalAlpha = 1;
+        requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+    </script>
+</body>
+</html>

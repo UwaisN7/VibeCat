@@ -10,9 +10,10 @@ function lockScroll() {
 }
  
 function unlockScroll() {
+   console.log("unlockScroll called");
+ document.body.classList.add('scroll-unlocked');
   document.body.classList.remove('scroll-locked');
-  document.body.classList.add('scroll-unlocked');
-}
+} 
 
 lockScroll();
 

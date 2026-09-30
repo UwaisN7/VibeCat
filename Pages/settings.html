@@ -6,7 +6,10 @@
     <meta name="description" content="VibeCat Music - drop a song on the moon or paste a YouTube link and press play.">
     <meta name="keywords" content="music player, cat, vibecat, purple cat, youtube player">
     <title>VibeCat Music Studio</title>
-    <link rel="stylesheet" href="../style.css">
+     <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../settings.css">
+   
+    
 </head>
 <body>
     <header>
@@ -14,26 +17,53 @@
     </header>
     <main class="scene">
         <div class="starfield" aria-hidden="true"></div>
+        </span>
+        <section class="panel" aria-label="Visualiser settings">
+            <h2>😺 Visualiser</h2>
+            <!-- <p class="hint">Preview runs on a fake beat.</p> -->
 
-        <section class="custom-buttons" aria-label="Visualiser settings">
-            <button type="button" class="setting sensitivity">Sensitivity</button>
-            <button type="button" class="setting particles">Particles</button>
-            <button type="button" class="setting colour">Colour</button>
-            <button type="button" class="setting frequency">Frequency</button>
+            <div class="control">
+                <div class="control__head"><label for="sens">Sensitivity</label><output id="sensOut"></output></div>
+                <input type="range" id="sens" min="0" max="100">
+            </div>
+            <div class="control">
+                <div class="control__head"><label for="parts">Particles</label><output id="partsOut"></output></div>
+                <input type="range" id="parts" min="0" max="100">
+            </div>
+            <div class="control">
+                <div class="control__head"><label for="freq">Frequency</label><output id="freqOut"></output></div>
+                <input type="range" id="freq" min="0" max="100">
+            </div>
+            <div class="control">
+                <div class="control__head"><span>Colour</span></div>
+                <div class="swatches" role="group" aria-label="Wave colour">
+                    <button type="button" class="swatch" style="--c:#C68FE8" data-c="#C68FE8" aria-label="Lilac"></button>
+                    <button type="button" class="swatch" style="--c:#B06BF1" data-c="#B06BF1" aria-label="Violet"></button>
+                    <button type="button" class="swatch" style="--c:#E58FD0" data-c="#E58FD0" aria-label="Orchid"></button>
+                    <button type="button" class="swatch" style="--c:#8F8BFF" data-c="#8F8BFF" aria-label="Periwinkle"></button>
+                    <button type="button" class="swatch" style="--c:#7EE0D6" data-c="#7EE0D6" aria-label="Aqua"></button>
+                </div>
+            </div>
+
+            <a class="back-link" href="../index.html">&larr; Back to player</a>
         </section>
-
-        <div class="ground" aria-hidden="true">
-            <svg viewBox="0 0 315 101" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <ellipse cx="157.5" cy="50.5" rx="157.5" ry="50.5" fill="#3B2C46"/>
-            </svg>
-        </div>
+      <div class="ground" aria-hidden="true">
+    <svg viewBox="0 0 315 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+            <linearGradient id="purple-fade" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0"   stop-color="#3B2C46" />  
+                <stop offset="30"   stop-color="#c68fe8" />  
+            </linearGradient>
+        </defs>
+        <ellipse cx="157.5" cy="50.5" rx="157.5" ry="50.5" fill="url(#purple-fade)"/>
+    </svg>
+</div>
         <svg class="pathway" viewBox="0 0 800 600" preserveAspectRatio="none" aria-hidden="true">
             <path class="pathway-line"
-                  d="M30,600 C160,555 100,465 235,445 C365,425 315,365 470,355"
+                  d="M30,600 C160,555 100,465 235,445 C365,425 315,365 610,330"
                   fill="none" stroke="#C9B8DE" stroke-width="16"
                   stroke-linecap="round" stroke-dasharray="0 36"/>
         </svg>
-
         <div class="house">
             <div class="house-roof">
                 <svg viewBox="0 0 57 39" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -44,6 +74,7 @@
                 <svg viewBox="0 0 54 54" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <rect width="54" height="54" fill="#B8AEC4"/>
                 </svg>
+                <div class="house-window"></div>
                 <div class="house-door">
                     <svg viewBox="0 0 24 35" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <rect width="24" height="35" fill="#1A1420"/>
@@ -51,8 +82,24 @@
                 </div>
             </div>
         </div>
+         <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+   <script src="../JS/grass.js" defer></script>
     </main>
     <footer></footer>
 </body>
 
 </html>
+
+<!-- 
+Make the house more.... appealing
+Colour gradient on the ground and maybe some grass thats like GSAP Animated
+
+
+
+
+
+
+Add the house scroll, and then build the visualiser ourselves
+
+Lock the scroll and throw it away nneed a managter  -->
+
