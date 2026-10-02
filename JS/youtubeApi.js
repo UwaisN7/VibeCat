@@ -5,7 +5,7 @@ const linkInput   = document.getElementById('youtubeLink');
 const loadButton  = document.getElementById('loadYoutube');
 const messageBox  = document.getElementById('youtubeError');   
 const embedBox    = document.getElementById('youtubeEmbed');
-const localPlayer = document.getElementById('musicPlayer');
+
  
 let ytPlayer = null; 
  
@@ -197,6 +197,7 @@ async function handleLoad() {
   const rawLink = linkInput.value.trim();
  
   hideEmbed();
+  if (!songStore.current)
    lockScroll();
  
   if (!rawLink) {
@@ -237,13 +238,9 @@ async function handleLoad() {
     return;
   }
  
-  localPlayer.pause();
-  localPlayer.hidden = true;
-  unlockScroll();
-  
-  
+ songStore.set({ type: 'youtube', videoId: info.videoId, title: info.title, player: ytPlayer });
   showMessage(
-    `NICE! "${info.title}" is good to go. Scroll is unlocked ${info.warning}`.trim(),
+    `NICE! "${info.title}" is good to go. Scroll is unlocked although we do recommend downloading the video for a reactive experience ${info.warning}`.trim(),
     'ok'
   );
 }

@@ -1,39 +1,20 @@
-
-const fileInput = document.getElementById("fileInput");
-
-fileInput.addEventListener("change", function(event){
-
-    const file = event.target.files[0];
-
-    if(!file) return;
-
-    playLocalSong(URL.createObjectURL(file));
-
-    console.log("Playing:", file.name);
-
+fileInput.addEventListener("change", function (event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  playLocalSong(URL.createObjectURL(file), file.name);
 });
 
-
-async function playLocalSong(file) {
-  const player = document.querySelector('.music-player') || document.getElementById('musicPlayer');
-  
-  if (!player) {
-    console.error("No player element found");
-    unlockScroll();
-    return;
-  }
-
+async function playLocalSong(url, name) {
+  const player = songStore.audio;
   try {
-    player.src = file;
+    player.src = url;
     player.load();
     await player.play();
-    console.log("Playing, unlocking scroll");
-    unlockScroll();
+    songStore.set({ type: 'local', url, name });   
   } catch (err) {
     console.error("Couldn't play that file:", err);
-    unlockScroll();  
+    unlockScroll();
   }
 }
-
 
 

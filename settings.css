@@ -83,7 +83,7 @@
     flex-direction: column;
     gap: 1.15rem;
     border-radius: 24px;
-    background: linear-gradient(160deg, rgba(93, 61, 123, .28), rgba(20, 14, 28, .55));
+
     border: 1px solid rgba(198, 143, 232, .22);
     box-shadow: 0 10px 50px rgba(0, 0, 0, .5), 0 0 40px rgba(110, 56, 98, .25), inset 0 1px 0 rgba(255, 255, 255, .08);
     backdrop-filter: blur(14px) saturate(140%);
@@ -181,3 +181,120 @@ input[type="range"]::-moz-range-thumb {
 }
 @keyframes wag { 0%,100% { transform: rotate(-8deg); } 50% { transform: rotate(10deg); } }
 @media (prefers-reduced-motion: reduce) { .roof-cat__tail { animation: none; } }
+
+
+.house-depth {
+    position: absolute;
+    left: 0;
+    top: -14.25%;          /* nudges the svg up so the chimney has room */
+    width: 145%;           /* extends to the right of the house = the "back" */
+    height: auto;
+    overflow: visible;
+    z-index: -1;           /* sits behind the front of the house */
+    pointer-events: none;
+}
+.house-depth .side-window { animation: flicker 5s ease-in-out infinite; filter: drop-shadow(0 0 4px var(--glow)); }
+
+
+
+.house-roof .roof-trim {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    z-index: 1;
+}
+.roof-trim .attic { filter: drop-shadow(0 0 3px var(--glow)); animation: flicker 6s ease-in-out infinite; }
+
+.house-roof::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    clip-path: polygon(49.9% 0, 100% 100%, 0 100%);
+    background: repeating-linear-gradient(180deg, rgba(0,0,0,.22) 0 1px, transparent 1px 7px);
+    pointer-events: none;
+}
+
+
+.house-base::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(90deg, rgba(0,0,0,.18) 0 4%, transparent 4% 96%, rgba(0,0,0,.18) 96% 100%),
+        linear-gradient(90deg, rgba(255,255,255,.12), rgba(0,0,0,.14));
+    pointer-events: none;
+}
+
+.house-window {
+    outline: 2px solid var(--accent-dark);
+    outline-offset: 0;
+}
+.house-window::before,
+.house-window::after {
+    content: "";
+    position: absolute;
+    background: var(--accent-dark);
+}
+.house-window::before { left: 50%; top: 0; width: 2px; height: 100%; transform: translateX(-50%); }
+.house-window::after  { top: 50%; left: 0; height: 2px; width: 100%; transform: translateY(-50%); }
+.house-window--right { left: 64%; animation-delay: -2s; }  
+
+
+.house-door { outline: 2px solid var(--accent-dark); outline-offset: 0; }
+.house-door::before {         
+    content: "";
+    position: absolute;
+    inset: 12% 18% 8%;
+    border: 1px solid rgba(110, 56, 98, .45);
+    border-radius: 2px;
+}
+.house-door::after {             /* knob */
+    content: "";
+    position: absolute;
+    right: 14%;
+    top: 55%;
+    width: 9%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: #6E3862;
+}
+
+
+.house-step {
+    position: absolute;
+    left: 29%;
+    width: 42%;
+    height: 7px;
+    bottom: -7px;
+    border-radius: 2px;
+    background: linear-gradient(#8C8299, #6F657C);
+}
+/* .house-lamp {
+    position: absolute;
+    left: 71%;
+    top: 46%;
+    width: 4%;
+    aspect-ratio: .7;
+    border-radius: 2px;
+    background: #FFE9A8;
+    box-shadow: 0 0 10px 3px rgba(255, 211, 110, .75);
+    animation: flicker 3s ease-in-out infinite;
+} */
+.house-bush {
+    position: absolute;
+    bottom: -4%;
+    width: 24%;
+    aspect-ratio: 1.2;
+    border-radius: 50% 50% 45% 45%;
+    background: radial-gradient(circle at 35% 30%, #7B5A99, #3B2C46 75%);
+    box-shadow: 0 0 10px rgba(198, 143, 232, .2);
+}
+.house-bush--l { left: -9%; }
+.house-bush--r { right: -9%; width: 20%; }
+
+@media (prefers-reduced-motion: reduce) {
+    .house-depth .smoke { animation: none; }
+    .house-depth .side-window, .roof-trim .attic, .house-lamp { animation: none; }
+}
