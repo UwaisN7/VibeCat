@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="VibeCat Music - drop a song on the moon or paste a YouTube link and press play.">
+    <meta name="keywords" content="music player, cat, vibecat, purple cat, youtube player">
+    <title>VibeCat Music Studio</title>
+     <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../settings.css">
+   
+    
+</head>
+<body>
+    <header>
+        <h1 class="visually-hidden">VibeCat Music &mdash; customise your night sky visualiser</h1>
+    </header>
+    <main class="scene">
+        <div class="starfield" aria-hidden="true"></div>
+        </span>
+        <section class="panel" aria-label="Visualiser settings">
+            <h2>😺 Settings</h2>
+         
+
+            <div class="control">
+                <div class="control__head"><label for="sens">Sensitivity</label><output id="sensOut"></output></div>
+                <input type="range" id="sens" min="0" max="100">
+            </div>
+            <div class="control">
+                <div class="control__head"><label for="parts">Particles</label><output id="partsOut"></output></div>
+                <input type="range" id="parts" min="0" max="100">
+            </div>
+            <div class="control">
+                <div class="control__head"><label for="freq">Frequency</label><output id="freqOut"></output></div>
+                <input type="range" id="freq" min="0" max="100">
+            </div>
+            <div class="control">
+                <div class="control__head"><span>Colour</span></div>
+                <div class="swatches" role="group" aria-label="Wave colour">
+                    <button type="button" class="swatch" style="--c:#C68FE8" data-c="#C68FE8" aria-label="Lilac"></button>
+                    <button type="button" class="swatch" style="--c:#B06BF1" data-c="#B06BF1" aria-label="Violet"></button>
+                    <button type="button" class="swatch" style="--c:#E58FD0" data-c="#E58FD0" aria-label="Orchid"></button>
+                    <button type="button" class="swatch" style="--c:#8F8BFF" data-c="#8F8BFF" aria-label="Periwinkle"></button>
+                    <button type="button" class="swatch" style="--c:#7EE0D6" data-c="#7EE0D6" aria-label="Aqua"></button>
+                </div>
+            </div>
+        </section>
+      <div class="ground" aria-hidden="true">
+    <svg viewBox="0 0 315 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+            <linearGradient id="purple-fade" x1="1" y1="1" x2="0" y2="0">
+                <stop offset="0"   stop-color="#3B2C46" />  
+                <stop offset="30"   stop-color="#c68fe8" />  
+            </linearGradient>
+        </defs>
+        <ellipse cx="157.5" cy="50.5" rx="157.5" ry="50.5" fill="url(#purple-fade)"/>
+    </svg>
+</div>
+        <svg class="pathway" viewBox="0 0 800 600" preserveAspectRatio="none" aria-hidden="true">
+            <path class="pathway-line"
+                  d="M30,600 C160,555 100,465 235,445 C365,425 315,365 610,330"
+                  fill="none" stroke="#C9B8DE" stroke-width="16"
+                  stroke-linecap="round" stroke-dasharray="0 36"/>
+        </svg>
+        <div class="house">
+            <svg class="house-depth" viewBox="0 -24 145 192.4" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <defs>
+            <linearGradient id="sideWall" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0" stop-color="#8C8299"/>
+                <stop offset="1" stop-color="#5F566B"/>
+            </linearGradient>
+        </defs>
+        
+        <ellipse cx="105" cy="168" rx="66" ry="5" fill="rgba(0,0,0,.35)"/>
+        
+        <polygon points="50,0 95,-8 145,60.4 100,68.4" fill="#542A4B"/>
+        <g stroke="rgba(0,0,0,.28)" stroke-width="1">
+            <line x1="62.5" y1="17.1" x2="107.5" y2="9.1"/>
+            <line x1="75"   y1="34.2" x2="120"   y2="26.2"/>
+            <line x1="87.5" y1="51.3" x2="132.5" y2="43.3"/>
+        </g>
+        <line x1="100" y1="68.4" x2="145" y2="60.4" stroke="#8A4A7C" stroke-width="1.6" stroke-linecap="round"/>
+        
+        <rect x="72" y="-16" width="9" height="28" fill="#7A4A6E"/>
+        <polygon points="81,-16 86,-18 86,10 81,12" fill="#5A3452"/>
+        <line x1="72" y1="-6" x2="81" y2="-6" stroke="rgba(0,0,0,.25)" stroke-width=".8"/>
+        <line x1="72" y1="3"  x2="81" y2="3"  stroke="rgba(0,0,0,.25)" stroke-width=".8"/>
+        <rect x="71" y="-19" width="11" height="3" fill="#8A5B7E"/>
+        <polygon points="71,-19 76,-21 87,-21 82,-19" fill="#4A2544"/>
+        <polygon points="82,-19 87,-21 87,-18 82,-16" fill="#6B4262"/>
+        
+      
+      
+        <polygon points="100,68.4 145,60.4 145,160.4 100,168.4" fill="url(#sideWall)"/>
+        
+        <polygon class="side-window" points="113,92.7 131,89.5 131,114.5 113,117.7" fill="#EBD5FF"/>
+        <g stroke="#4A2544" stroke-width="1.2">
+            <line x1="122" y1="91.1" x2="122" y2="116.1"/>
+            <line x1="113" y1="105.2" x2="131" y2="102"/>
+        </g>
+        <polygon points="113,92.7 131,89.5 131,114.5 113,117.7" stroke="#4A2544" stroke-width="1.6" fill="none"/>
+    </svg>
+
+    <div class="house-roof">
+        <svg viewBox="0 0 57 39" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M28.1458 0L56.2916 38.25H-1.33514e-05L28.1458 0Z" fill="#6E3862"/>
+        </svg>
+
+      
+        <svg class="roof-trim" viewBox="0 0 57 39" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <polyline points="-2.5,40 28.15,0.6 58.8,40" stroke="#A3568F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle class="attic" cx="28.15" cy="24" r="5.2" fill="#EBD5FF" stroke="#3B1B36" stroke-width="1.3"/>
+            <line x1="28.15" y1="18.8" x2="28.15" y2="29.2" stroke="#3B1B36" stroke-width="1"/>
+            <line x1="22.95" y1="24"   x2="33.35" y2="24"   stroke="#3B1B36" stroke-width="1"/>
+        </svg>
+    </div>
+
+    <div class="house-base">
+        <svg viewBox="0 0 54 54" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="54" height="54" fill="#B8AEC4"/>
+        </svg>
+        <div class="house-window"></div>
+
+    
+        <div class="house-window house-window--right"></div>
+        <div class="house-lamp"></div>
+        <div class="house-step"></div>
+        <div class="house-bush house-bush--l"></div>
+        <div class="house-bush house-bush--r"></div>
+
+        <div class="house-door">
+            <svg viewBox="0 0 24 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect width="24" height="35" fill="#1A1420"/>
+            </svg>
+        </div>
+    </div>
+        </div>
+         <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+   <script src="../JS/grass.js" defer></script>
+    </main>
+    <footer></footer>
+</body>
+
+</html>
+
+<!-- 
+Make the house more.... appealing
+Colour gradient on the ground and maybe some grass thats like GSAP Animated
+
+
+
+
+
+
+Add the house scroll, and then build the visualiser ourselves
+
+Lock the scroll and throw it away nneed a managter  -->
+

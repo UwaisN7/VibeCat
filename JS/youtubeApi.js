@@ -5,7 +5,7 @@ const linkInput   = document.getElementById('youtubeLink');
 const loadButton  = document.getElementById('loadYoutube');
 const messageBox  = document.getElementById('youtubeError');   
 const embedBox    = document.getElementById('youtubeEmbed');
-const localPlayer = document.getElementById('musicPlayer');
+
  
 let ytPlayer = null; 
  
@@ -172,15 +172,15 @@ function showMessage(text, type) {
   messageBox.className = `youtube-error is-${type}`;
 }
  
-function lockScroll() {
-  document.body.classList.add('scroll-locked');
-  document.body.classList.remove('scroll-unlocked');
-}
+// function lockScroll() {
+//   document.body.classList.add('scroll-locked');
+//   document.body.classList.remove('scroll-unlocked');
+// }
  
-function unlockScroll() {
-  document.body.classList.remove('scroll-locked');
-  document.body.classList.add('scroll-unlocked');
-}
+// function unlockScroll() {
+//   document.body.classList.remove('scroll-locked');
+//   document.body.classList.add('scroll-unlocked');
+// }
  
 function hideEmbed() {
   if (ytPlayer && ytPlayer.destroy) {
@@ -197,7 +197,8 @@ async function handleLoad() {
   const rawLink = linkInput.value.trim();
  
   hideEmbed();
-  lockScroll();
+  if (!songStore.current)
+   lockScroll();
  
   if (!rawLink) {
     showMessage('Paste a YouTube link first.', 'error');
@@ -237,18 +238,13 @@ async function handleLoad() {
     return;
   }
  
-  localPlayer.pause();
-  localPlayer.hidden = true;
-  unlockScroll();
+ songStore.set({ type: 'youtube', videoId: info.videoId, title: info.title, player: ytPlayer });
   showMessage(
-    `NICE! "${info.title}" is good to go. Scroll is unlocked ${info.warning}`.trim(),
+    `NICE! "${info.title}" is good to go. Scroll is unlocked although we do recommend downloading the video for a reactive experience ${info.warning}`.trim(),
     'ok'
   );
 }
- 
- 
 
-lockScroll(); 
  
 loadButton.addEventListener('click', handleLoad);
 linkInput.addEventListener('keydown', (e) => {
