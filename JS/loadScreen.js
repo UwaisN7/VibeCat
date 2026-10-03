@@ -68,7 +68,7 @@ async function revealScene() {
 }
 
 async function loadSettingsScene() {
-    const res = await fetch('../Pages/settings.html');
+    const res = await fetch('Pages/settings.html');
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
     const html = await res.text();
