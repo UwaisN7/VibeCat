@@ -20,5 +20,17 @@
                 fragment.appendChild(star);
             }
             field.appendChild(fragment);
+
+            statusbar.forEach ((star) =>{
+            gsap.to(star,{
+                opacity:gsap.utils.random(0.2,1),
+                scale: gsap.utils.random(0.8,1.4),
+                duration: gspa.utils.random (1.5,4),
+                ease: 'sine.inOut',
+                repeat:-1,
+                yoyo: true,
+                delay: gsap.utils.random(0,4),
+            }); 
+            })
         })();
  

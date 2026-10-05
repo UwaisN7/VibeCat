@@ -14,7 +14,7 @@ lockScroll();
 const songHost = document.createElement('div');
 songHost.id = 'songHost';
 
-const embed = document.createElement('div');   // youtubeApi.js puts the YT player in here
+const embed = document.createElement('div');   
 embed.id = 'youtubeEmbed';
 embed.hidden = true;
 songHost.appendChild(embed);
@@ -22,8 +22,8 @@ songHost.appendChild(embed);
 document.body.appendChild(songHost);
 
 const songStore = {
-  audio: new Audio(),   // lives in memory, not in your HTML
-  current: null,        // {type:'local', url, name} | {type:'youtube', videoId, title, player}
+  audio: new Audio(),   
+  current: null,       
   listeners: [],
   button: null,
 

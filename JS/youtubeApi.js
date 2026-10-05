@@ -172,16 +172,7 @@ function showMessage(text, type) {
   messageBox.className = `youtube-error is-${type}`;
 }
  
-// function lockScroll() {
-//   document.body.classList.add('scroll-locked');
-//   document.body.classList.remove('scroll-unlocked');
-// }
- 
-// function unlockScroll() {
-//   document.body.classList.remove('scroll-locked');
-//   document.body.classList.add('scroll-unlocked');
-// }
- 
+
 function hideEmbed() {
   if (ytPlayer && ytPlayer.destroy) {
     ytPlayer.destroy();
