@@ -3,7 +3,7 @@
     const ground = document.querySelector('.ground');
     if (!ground || ground.querySelector('.grass')) return;
 
-    const BLADES = 650;                
+    const BLADES = 700;                
     const START_COLOUR = '#C68FE8';     
  
     
