@@ -70,7 +70,26 @@
     background: radial-gradient(ellipse, rgba(198, 143, 232, .45), transparent 70%);
 }
 @keyframes flicker { 0%,100% { opacity: 1; } 50% { opacity: .78; } }
+.house-door { z-index: 2; }
 
+
+.scene { 
+    position: relative;
+ }
+.world {
+    position: absolute;
+    inset: 0;
+    transform-origin: 0 0;
+    will-change: transform;
+}
+
+.house-doorway {
+    position: absolute;      
+    z-index: 1;            
+    pointer-events: none;
+    background: radial-gradient(ellipse at 50% 100%, #f3dcff 0%, #c68fe8 45%, #4b2a6b 100%);
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, .45);
+}
 
 .panel {
     position: fixed;

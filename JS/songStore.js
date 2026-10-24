@@ -88,7 +88,7 @@ const songStore = {
   }
 };
 
-
+window.songStore = songStore;
 setInterval(() => songStore.refreshButton(), 300);
 
 

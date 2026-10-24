@@ -6,7 +6,7 @@ let transitioning = false;
 function wait(ms)    { return new Promise(r => setTimeout(r, ms)); }
 function nextFrame() { return new Promise(r => requestAnimationFrame(() => r())); }
 
-// own names so songStore.js's lockScroll/unlockScroll can't override these
+
 function freezeScroll() { document.body.style.overflow = 'hidden'; }
 function thawScroll() {
     document.body.classList.remove('scroll-locked');
@@ -63,7 +63,7 @@ function loadStyle(url) {
     });
 }
 
-// Pages/x.html uses "../style.css"; resolve against the fetched page so paths match index.html's
+
 async function swapSceneInto(pagePath) {
     const pageUrl = new URL(pagePath, location.href);
     const res = await fetch(pageUrl);
@@ -115,21 +115,21 @@ const IndexScene = {
         curtain.style.opacity = 1;
         await wait(800);
 
-        try {
-            await swapSceneInto('Pages/settings.html');
-        } catch (err) {
-            console.error('Failed to load settings scene:', err);
-        }
+      try {
+    await swapSceneInto('Pages/settings.html');
+} catch (err) {
+    console.error('Failed to load settings scene:', err);
+}
 
-        await nextFrame();
-        await nextFrame();
-        await wait(1000);
-        window.scrollTo(0, 0);
-        await nextFrame();
+window.scrollTo(0, 0);
+await nextFrame();
 
-        await fadeFromBlack(1100);
-        thawScroll();
-        enterScene(detectPage());
+enterScene(detectPage());
+gsap.ticker.tick();
+await nextFrame();
+await nextFrame();
+await fadeFromBlack(1100);
+thawScroll();
     },
 };
 
@@ -137,71 +137,154 @@ const SettingsScene = {
     house: null,
     proxy: { t: 0 },
     doorHit: false,
+    doorOpen: 0,
+    vScroll: 0,
+    maxScroll: 1400,
+init() {
+    document.documentElement.style.overflow = 'hidden';
+    document.body.style.overflow = 'hidden';
+    window.scrollTo(0, 0);
+    document.documentElement.style.scrollBehavior = 'auto';
 
-    init() {
-        this.house = document.querySelector('.house');
-        this.proxy.t = 0;
-        this.doorHit = false;
-        if (!this.house) {
-            console.warn('[loadScreen] settings: no .house found');
-            return;
-        }
-        this.house.style.transformOrigin = '50% 85%';
-        document.documentElement.style.scrollBehavior = 'auto';
-    },
+    this.house = document.querySelector('.house');
+    this.world = document.querySelector('.world');
+    this.proxy.t = 0;
+    this.doorHit = false;
+    this.doorOpen = 0;
+    this.vScroll = 0;
 
-    applyZoom() {
-        const t = this.proxy.t;
-        gsap.set(this.house, { scale: 1 + t * 8, y: -t * 40 });
-        const door = document.querySelector('.house-door');
-        if (door) {
-            door.style.boxShadow =
-                `0 0 ${t * 40}px ${t * 14}px rgba(198,143,232,${t * 0.9})`;
-        }
-    },
+    if (!this.house || !this.world) {
+        console.warn('[loadScreen] settings: missing .house or .world');
+        return;
+    }
 
-    onScroll() {
-        if (transitioning || this.doorHit || !this.house || !window.gsap) return;
+    gsap.set(this.world, { clearProps: 'transform' });
 
-        const progress = getScrollProgress();
+    const door = document.querySelector('.house-door');
+    if (!door) {
+        console.warn('[loadScreen] settings: no .house-door');
+        return;
+    }
+
+    if (!document.querySelector('.house-doorway')) {
+        const dw = document.createElement('div');
+        dw.className = 'house-doorway';
+        door.before(dw);
+    }
+    this.doorway = document.querySelector('.house-doorway');
+
+    const pr = door.offsetParent.getBoundingClientRect();
+    const d0 = door.getBoundingClientRect();
+    Object.assign(this.doorway.style, {
+        left:   (d0.left - pr.left) + 'px',
+        top:    (d0.top  - pr.top)  + 'px',
+        width:  d0.width  + 'px',
+        height: d0.height + 'px',
+    });
+
+    const wr = this.world.getBoundingClientRect();
+    const dr = door.getBoundingClientRect();
+    const doorX = dr.left + dr.width / 2;
+    const doorY = dr.top  + dr.height / 2;
+
+    this.world.style.transformOrigin = `${doorX - wr.left}px ${doorY - wr.top}px`;
+    this.camDX = window.innerWidth  / 2 - doorX;
+    this.camDY = window.innerHeight / 2 - doorY;
+    this.zoomEnd = Math.max(window.innerWidth / dr.width, window.innerHeight / dr.height) * 1.1;
+
+    this._onWheel = (e) => this.onWheel(e);
+    this._onTouchStart = (e) => this.onTouchStart(e);
+    this._onTouchMove = (e) => this.onTouchMove(e);
+    window.addEventListener('wheel', this._onWheel, { passive: false });
+    window.addEventListener('touchstart', this._onTouchStart, { passive: true });
+    window.addEventListener('touchmove', this._onTouchMove, { passive: false });
+},
+
+
+onWheel(e) {
+    if (transitioning || this.doorHit) return;
+    e.preventDefault();
+    this.vScroll = Math.max(0, Math.min(this.maxScroll, this.vScroll + e.deltaY));
+    this.applyFromVScroll();
+},
+
+onTouchStart(e) {
+    if (transitioning || this.doorHit) return;
+    this._touchY = e.touches[0].clientY;
+},
+
+onTouchMove(e) {
+    if (transitioning || this.doorHit) return;
+    e.preventDefault();
+    const y = e.touches[0].clientY;
+    const dy = this._touchY - y;
+    this._touchY = y;
+    this.vScroll = Math.max(0, Math.min(this.maxScroll, this.vScroll + dy * 1.5));
+    this.applyFromVScroll();
+},
+
+teardown() {
+    window.removeEventListener('wheel', this._onWheel);
+    window.removeEventListener('touchstart', this._onTouchStart);
+    window.removeEventListener('touchmove', this._onTouchMove);
+    document.documentElement.style.overflow = '';
+    document.body.style.overflow = '';
+},
+    applyFromVScroll() {
+        const progress = this.vScroll / this.maxScroll;
+        const zoomT = Math.min(progress / 0.85, 1);
         gsap.to(this.proxy, {
-            t: Math.min(progress / 0.85, 1),
-            duration: 0.6,
+            t: zoomT,
+            duration: 0.4,
             ease: 'power2.out',
             overwrite: true,
             onUpdate: () => this.applyZoom(),
         });
-
-        if (progress >= 0.85) {
+        const doorT = Math.max(0, Math.min(1, (progress - 0.35) / 0.5));
+        if (Math.abs(doorT - this.doorOpen) > 0.001) {
+            this.doorOpen = doorT;
+            this.applyDoor(doorT);
+        }
+        if (progress >= 0.85 && !this.doorHit) {
             this.doorHit = true;
             this.openDoorAndReveal();
         }
     },
+applyDoor(t) {
+    const door = document.querySelector('.house-door');
+    if (!door || !window.gsap) return;
+    gsap.set(door, {
+        transformPerspective: 800,
+        transformOrigin: '0% 50%',
+        rotateY: -100 * t,
+    });
+    if (this.doorway) {
+        this.doorway.style.boxShadow =
+            `inset 0 0 10px rgba(0,0,0,.45), 0 0 ${t * 40}px ${t * 14}px rgba(198,143,232,${t * 0.9})`;
+    }
 
+},
+applyZoom() {
+    const t = this.proxy.t;
+    gsap.set(this.world, {
+        scale: Math.pow(this.zoomEnd, t),
+        x: this.camDX * t,
+        y: this.camDY * t,
+    });
+
+},
+
+
+    
     async openDoorAndReveal() {
+        this.teardown();
         transitioning = true;
         freezeScroll();
 
         const door = document.querySelector('.house-door');
         const house = this.house;
 
-        if (window.gsap && door && house) {
-            gsap.killTweensOf(this.proxy);
-            await new Promise(resolve => {
-                const tl = gsap.timeline({ onComplete: resolve });
-                tl.to(house, { scale: 14, duration: 1.1, ease: 'power3.in' }, 0);
-                tl.to(door, {
-                    transformOrigin: '50% 100%',
-                    scaleY: 1.15,
-                    y: '-=8',
-                    duration: 0.7,
-                    ease: 'power2.out',
-                }, 0.05);
-            });
-        } else {
-            await wait(900);
-        }
-
+       
         await fadeToBlack(600);
 
         try {
@@ -210,14 +293,14 @@ const SettingsScene = {
             console.error('Failed to load visualiser scene:', err);
         }
 
-        window.scrollTo(0, 0);
-        await nextFrame();
-        await nextFrame();
-
-        await fadeFromBlack(1100);
-        thawScroll();
-        enterScene(detectPage());
-    },
+    
+enterScene(detectPage());
+gsap.ticker.tick();
+await nextFrame();
+await nextFrame();
+await fadeFromBlack(1100);
+thawScroll();
+    }
 };
 
 const VisualiserScene = {};
@@ -234,6 +317,7 @@ function scrollHandler() {
 
 function enterScene(name) {
     window.removeEventListener('scroll', scrollHandler);
+      SCENES[PAGE]?.teardown?.();
     PAGE = name;
     triggered = false;
     transitioning = false;
@@ -244,7 +328,8 @@ function enterScene(name) {
         return;
     }
     scene.init?.();
-    window.addEventListener('scroll', scrollHandler, { passive: true });
+    document.dispatchEvent(new CustomEvent('scene:loaded', { detail: { page: name } }));   //Grass loader
+    window.addEventListener('scroll', scrollHandler, { passive: true }); 
 }
 
 if ('scrollRestoration' in history) history.scrollRestoration = 'manual';

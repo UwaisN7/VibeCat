@@ -3,78 +3,106 @@ const visualiserSettings = {
     particles: 50,
     frequency: 50,
     colour : '#C68FE8'
-}
+};
 const vibeAudio = { level: 0 };
-const canvas = document.getElementById('visualiserCanvas')
-const ctx = canvas.getContext ('2d')
-console.log('canvas found?', document.getElementById('visualiserCanvas'));
-function resize(){
-  const dpr = window.devicePixelRatio || 1;
-  W = canvas.clientWidth;
-  H = canvas.clientHeight;
-  canvas.width = W* dpr;
-  canvas.height = H* dpr;
-  ctx.setTransform(dpr,0,0,dpr,0,0);
-}
 
-window.addEventListener('resize',resize)
-resize();
+let _visualiserStarted = false;
+let _visualiserRaf = null;
 
-function frame() {
-  vibeAudio.level = readLevel();
-console.log(vibeAudio.level.toFixed(2));
-  ctx.fillStyle = 'red';
-ctx.fillRect(0, 0, W, H);
-    const t = performance.now() / 1000;
+function initVisualiser() {
+    if (_visualiserStarted) return;
+    const canvas = document.getElementById('visualiserCanvas');
+    if (!canvas) return;                // canvas not in DOM yet — caller will retry
 
-    ctx.clearRect(0, 0, W, H);
-    ctx.strokeStyle = visualiserSettings.colour;
-    ctx.lineWidth = 3;
-    ctx.lineCap = 'round';
+    _visualiserStarted = true;
+    const ctx = canvas.getContext('2d');
+    let W = 0, H = 0;
 
-   const boost = visualiserSettings.sensitivity / 100;
-const amp = (10 + vibeAudio.level * 400 * boost) * (H / 500);
-
-    for (let i = 0; i < 3; i++) {
-       const baseY = H * (0.05 + i * 0.2); 
-        const k = 0.01 + i * 0.004;
-
-        ctx.beginPath();
-        for (let x = 0; x <= W; x += 8) {
-            const y = baseY + Math.sin(x * k + t) * amp;
-            if (x === 0) ctx.moveTo(x, y);
-            else ctx.lineTo(x, y);
-        }
-        ctx.stroke();
+    function resize() {
+        const dpr = window.devicePixelRatio || 1;
+        W = canvas.clientWidth;
+        H = canvas.clientHeight;
+        canvas.width = W * dpr;
+        canvas.height = H * dpr;
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     }
 
-    requestAnimationFrame(frame);
-}
-requestAnimationFrame(frame);
+    window.addEventListener('resize', resize);
+    resize();
 
-let audioCtx, analyser, dataArray;
+    function frame() {
+        vibeAudio.level = readLevel();
+        const t = performance.now() / 1000;
+console.log(audioCtx?.state, vibeAudio.level);
+        ctx.clearRect(0, 0, W, H);
+        ctx.strokeStyle = visualiserSettings.colour;
+        ctx.lineWidth = 3;
+        ctx.lineCap = 'round';
 
+        const boost = visualiserSettings.sensitivity / 100;
+        const amp = (10 + vibeAudio.level * 400 * boost) * (H / 500);
+
+        for (let i = 0; i < 3; i++) {
+            const baseY = H * (0.05 + i * 0.2);
+            const k = 0.01 + i * 0.004;
+            ctx.beginPath();
+            for (let x = 0; x <= W; x += 8) {
+                const y = baseY + Math.sin(x * k + t) * amp;
+                if (x === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+            }
+            ctx.stroke();
+        }
+        _visualiserRaf = requestAnimationFrame(frame);
+    }
+    _visualiserRaf = requestAnimationFrame(frame);
+
+    let audioCtx, analyser, dataArray;
 function setupAudio() {
-    if (audioCtx) { audioCtx.resume(); return; }  
-
+    if (audioCtx) {
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        return;
+    }
+    if (!window.songStore || !songStore.audio) return;
     audioCtx = new AudioContext();
     const source = audioCtx.createMediaElementSource(songStore.audio);
     analyser = audioCtx.createAnalyser();
     analyser.fftSize = 256;
-    dataArray = new Uint8Array(analyser.frequencyBinCount);  
-
+    dataArray = new Uint8Array(analyser.frequencyBinCount);
     source.connect(analyser);
     analyser.connect(audioCtx.destination);
+    if (audioCtx.state === 'suspended') {
+        audioCtx.resume().catch(() => {});
+        const resume = () => {
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            window.removeEventListener('pointerdown', resume);
+            window.removeEventListener('keydown', resume);
+        };
+        window.addEventListener('pointerdown', resume, { once: true });
+        window.addEventListener('keydown', resume, { once: true });
+    }
 }
 
+if (window.songStore) {
+    songStore.onChange(song => {
+        if (song.type === 'local') setupAudio();
+    });
+}
 
-songStore.onChange(song => {
-    if (song.type === 'local') setupAudio();
-});
+if (window.songStore && songStore.current && songStore.current.type === 'local') {
+    setupAudio();
+}
 
-function readLevel() {
-    if (!analyser) return 0;                
-    analyser.getByteFrequencyData(dataArray); 
+   function readLevel() {
+    if (!analyser || !audioCtx || audioCtx.state !== 'running') return 0;
+    analyser.getByteFrequencyData(dataArray);
     let sum = 0;
     for (let i = 0; i < dataArray.length; i++) sum += dataArray[i];
-    return sum / dataArray.length / 255; }
+    return sum / dataArray.length / 255;
+}
+   
+} 
+if (document.getElementById('visualiserCanvas')) initVisualiser();
+document.addEventListener('scene:loaded', initVisualiser);
+window.initVisualiser = initVisualiser;
+
