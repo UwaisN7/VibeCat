@@ -13,7 +13,7 @@
     --moon-dark: #6E3862;
     --crater: #282828;
     --accent: #B06BF1;
-    --accent-soft: #000000;
+    --accent-soft: #4a045b;
     --text-soft: #C68FE8;
 }
  
@@ -197,7 +197,28 @@ input:focus-visible {
     border: 0;
 }
  
-
+.youtube-discovery{
+     display: flex;         
+  flex-direction: row; 
+   flex-wrap: wrap; 
+   padding :30px;
+   width: 100%;
+   height: fit-content;
+   background: #5D3D7B;
+ border-radius: 6px;
+ gap: 10px;
+}
+.discovery-card{
+   background-color:var(--accent-soft) ;
+   border: 2px solid var(--moon-mid);
+   padding: 55px;
+   cursor: pointer;
+   
+}
+.discovery-card:hover{
+border-color: var(--text-soft);
+    box-shadow: 0 0 10px rgba(176, 107, 241, 0.35);
+}
 .moon-drop {
     display: flex;
     justify-content: center;
@@ -398,7 +419,7 @@ footer {
     opacity: 0.6;
     font-size: 0.85rem;
 }
- /*(Page 2 — house-on-a-hill scene*/
+
  :root {
     --hill: #3B2C46;
     --house-wall: #B8AEC4;
