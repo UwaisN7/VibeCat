@@ -239,3 +239,17 @@ body.page-visualiser {
         border-bottom-width: 22px;
     }
 }
+
+
+body.page-visualiser .youtube-embed {
+    top: 100px;
+    bottom: calc(var(--controls-space) + var(--sill-height) + 10px); 
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 320px; 
+    z-index: 10;
+    opacity: 1;
+    pointer-events: auto;
+    transition: all 0.5s ease; 
+}

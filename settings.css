@@ -290,17 +290,7 @@ input[type="range"]::-moz-range-thumb {
     border-radius: 2px;
     background: linear-gradient(#8C8299, #6F657C);
 }
-/* .house-lamp {
-    position: absolute;
-    left: 71%;
-    top: 46%;
-    width: 4%;
-    aspect-ratio: .7;
-    border-radius: 2px;
-    background: #FFE9A8;
-    box-shadow: 0 0 10px 3px rgba(255, 211, 110, .75);
-    animation: flicker 3s ease-in-out infinite;
-} */
+
 .house-bush {
     position: absolute;
     bottom: -4%;
@@ -316,4 +306,10 @@ input[type="range"]::-moz-range-thumb {
 @media (prefers-reduced-motion: reduce) {
     .house-depth .smoke { animation: none; }
     .house-depth .side-window, .roof-trim .attic, .house-lamp { animation: none; }
+}
+
+body:has(main.scene) .youtube-embed {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-9999px);
 }

@@ -16,6 +16,7 @@ songHost.id = 'songHost';
 
 const embed = document.createElement('div');   
 embed.id = 'youtubeEmbed';
+embed.className = 'youtube-embed';
 embed.hidden = true;
 songHost.appendChild(embed);
 

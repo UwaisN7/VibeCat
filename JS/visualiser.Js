@@ -94,6 +94,16 @@ if (window.songStore && songStore.current && songStore.current.type === 'local')
 }
 
    function readLevel() {
+
+    if (window.songStore&& songStore.current && songStore.current.type === 'youtube'){
+        const yt = songStore.current.player;
+        if (yt && typeof yt.getPlayerState === 'function' && yt.getPlayerState() === 1) {
+            const time = performance.now() / 15;
+            const fakeLevel = (Math.abs(Math.sin(time)) * 0.3) + (Math.random() * 0.4);
+            return fakeLevel; 
+        }
+        return 0;
+    }
     if (!analyser || !audioCtx || audioCtx.state !== 'running') return 0;
     analyser.getByteFrequencyData(dataArray);
     let sum = 0;
