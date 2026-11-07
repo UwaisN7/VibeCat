@@ -107,15 +107,9 @@ body.page-visualiser {
     overflow: hidden;       
     pointer-events: none;
 }
-
-
-
-
-
 .visualiser-lines {
-    display: flex;
-    align-items: center;
-    gap: clamp(2rem, 8vw, 6rem);
+    position: relative;
+    width: 100%;
     height: 100%;
 }
 
@@ -207,10 +201,13 @@ body.page-visualiser {
     gap: 0.6rem;
 }
 
-   #visualiserCanvas {
+ #visualiserCanvas {
+    position: absolute;
+    inset: 0;
     width: 100%;
-    height: 120%;
+    height: 100%;
     display: block;
+    z-index: 1;
 }
 
 
