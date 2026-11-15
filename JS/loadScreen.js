@@ -1,3 +1,7 @@
+//Lock screen scrolling until songstore tells this script to unlock 
+//The script must know which page it is on 
+//When scrolling to the end of the page fade in a loadscreen, load the page than fade out
+
 const curtain = document.getElementById('curtain');
 let PAGE = 'unknown';
 let triggered = false;
@@ -65,28 +69,23 @@ function loadStyle(url) {
 
 
 async function swapSceneInto(pagePath) {
-    const pageUrl = new URL(pagePath, location.href);
+   const pageUrl = new URL(pagePath, location.href);
     const res = await fetch(pageUrl);
     if (!res.ok) throw new Error(`HTTP ${res.status} for ${pagePath}`);
     const doc = new DOMParser().parseFromString(await res.text(), 'text/html');
-
+    document.querySelectorAll('link[rel="stylesheet"]').forEach(link => link.remove());
     for (const link of doc.querySelectorAll('link[rel="stylesheet"]')) {
         const url = new URL(link.getAttribute('href'), pageUrl).href;
-        if ([...document.querySelectorAll('link[rel="stylesheet"]')].some(l => l.href === url)) continue;
         await loadStyle(url);
     }
-
     const newMain = doc.querySelector('main');
     const oldMain = document.querySelector('main');
     if (!newMain || !oldMain) throw new Error(`Missing <main> in ${pagePath}`);
     oldMain.replaceWith(newMain);
-
     const newHeader = doc.querySelector('header');
     const oldHeader = document.querySelector('header');
     if (newHeader && oldHeader) oldHeader.replaceWith(newHeader);
-
-    document.body.classList.add(...doc.body.classList);
-
+    document.body.className = doc.body.className;
     for (const s of doc.querySelectorAll('script[src]')) {
         const url = new URL(s.getAttribute('src'), pageUrl).href;
         if ([...document.scripts].some(x => x.src === url)) continue;
@@ -303,7 +302,45 @@ thawScroll();
     }
 };
 
-const VisualiserScene = {};
+const VisualiserScene = {init() {
+  
+        this.homeBtn = document.getElementById('back-to-home');
+        this.settingsBtn = document.getElementById('back-to-settings');
+        
+    
+        this._onHomeClick = () => this.navigate('../index.html');
+        this._onSettingsClick = () => this.navigate('Pages/settings.html'); 
+        
+        if (this.homeBtn) this.homeBtn.addEventListener('click', this._onHomeClick);
+        if (this.settingsBtn) this.settingsBtn.addEventListener('click', this._onSettingsClick);
+    },
+    
+    async navigate(path) {
+        if (transitioning) return;
+        transitioning = true;
+        freezeScroll();
+        await fadeToBlack(600);
+        try {
+            await swapSceneInto(path);
+        } catch (err) {
+            console.error(`Failed to load ${path}:`, err);
+        }
+        
+        window.scrollTo(0, 0);
+        await nextFrame();
+        enterScene(detectPage());
+        if (window.gsap) gsap.ticker.tick();
+        
+        await nextFrame();
+        await nextFrame();
+        await fadeFromBlack(1100);
+        thawScroll();
+    },
+    
+    teardown() {
+        if (this.homeBtn) this.homeBtn.removeEventListener('click', this._onHomeClick);
+        if (this.settingsBtn) this.settingsBtn.removeEventListener('click', this._onSettingsClick);
+    }};
 
 const SCENES = {
     index: IndexScene,
@@ -328,7 +365,7 @@ function enterScene(name) {
         return;
     }
     scene.init?.();
-    document.dispatchEvent(new CustomEvent('scene:loaded', { detail: { page: name } }));   //Grass loader
+    document.dispatchEvent(new CustomEvent('scene:loaded', { detail: { page: name } }));   
     window.addEventListener('scroll', scrollHandler, { passive: true }); 
 }
 

@@ -10,7 +10,6 @@ function unlockScroll() {
 
 lockScroll();
 
-
 const songHost = document.createElement('div');
 songHost.id = 'songHost';
 
@@ -26,7 +25,6 @@ const songStore = {
   audio: new Audio(),   
   current: null,       
   listeners: [],
-  button: null,
 
   set(song) {
     const prev = this.current;
@@ -40,6 +38,17 @@ const songStore = {
 
     if (prev?.type === 'local' && prev.url !== song.url) {
       URL.revokeObjectURL(prev.url);
+    }
+    
+    let spacer = document.getElementById('global-spacer');
+    if (!spacer) {
+        spacer = document.createElement('div');
+        spacer.id = 'global-spacer';
+        spacer.style.height = '60vh'; 
+        spacer.style.width = '1px';
+        spacer.style.visibility = 'hidden';
+        spacer.style.pointerEvents = 'none';
+        document.body.appendChild(spacer);
     }
 
     this.current = song;
@@ -70,28 +79,34 @@ const songStore = {
   },
 
   showControls() {
-    if (this.button) return;
-    this.button = document.createElement('button');
-    this.button.id = 'songToggle';
-    this.button.type = 'button';
-    this.button.addEventListener('click', () => this.toggle());
-    songHost.appendChild(this.button);
-    this.refreshButton();
+    let btn = document.getElementById('songToggle');
+    if (!btn) {
+        btn = document.createElement('button');
+        btn.id = 'songToggle';
+        btn.type = 'button';
+        songHost.appendChild(btn);
+    }
   },
 
   hideControls() {
-    this.button?.remove();
-    this.button = null;
+    const btn = document.getElementById('songToggle');
+    if (btn && btn.parentElement === songHost) {
+        btn.remove();
+    }
   },
 
   refreshButton() {
-    if (this.button) this.button.textContent = this.isPlaying() ? 'Pause' : 'Play';
+    const btn = document.getElementById('songToggle');
+    if (btn) {
+        if (!btn.dataset.bound) {
+            btn.addEventListener('click', () => this.toggle());
+            btn.dataset.bound = '1';
+        }
+        btn.textContent = this.isPlaying() ? 'Pause' : 'Play';
+    }
   }
 };
 
 window.songStore = songStore;
+songStore.audio.loop = true;
 setInterval(() => songStore.refreshButton(), 300);
-
-
-
-

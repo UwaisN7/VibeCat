@@ -137,7 +137,7 @@ function verifyWithPlayer(videoId) {
     embedBox.innerHTML = '<div id="ytPlayer"></div>';
     embedBox.hidden = false;
  
-    const playerVars = { rel: 0, playsinline: 1 };
+    const playerVars = { rel: 0, playsinline: 1, loop: 1, playlist: videoId };
     if (location.protocol.startsWith('http')) playerVars.origin = location.origin;
  
     ytPlayer = new YT.Player('ytPlayer', {

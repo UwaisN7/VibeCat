@@ -69,7 +69,7 @@ function rotateCards(){
         duration: 1,
         ease: "power2.inOut",
         onComplete: () => {
-            firstCard.remove(); // Delete it from HTML once off-screen
+            firstCard.remove(); 
         }
     });
 }
@@ -94,7 +94,8 @@ async function playFromDiscovery(videoId) {
         title: info.title, 
         player: ytPlayer 
     });
-showMessage(`Now playing: ${info.title}`, 'ok');
+showMessage(`NICE! "${info.title}" is good to go. Scroll is unlocked although we do recommend downloading the video for a reactive experience ${info.warning}`.trim(),
+    'ok');
 }
 document.addEventListener('DOMContentLoaded', () => {
     

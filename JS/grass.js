@@ -1,9 +1,14 @@
+//On Load with a ground object 
+//Dynamically spawns grass objects which are mini triangles 
+//GSAP from left to right to show sway
+
+
 (function () {
     function initGrass() {
     const ground = document.querySelector('.ground');
     if (!ground || ground.querySelector('.grass')) return;
 
-    const BLADES = 700;                
+    const BLADES = 300;                
     const START_COLOUR = '#C68FE8';     
  
     
