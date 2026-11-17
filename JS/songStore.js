@@ -1,3 +1,8 @@
+
+// Controls whether the visualiser is in youtube mode or local song
+//One place of control for the music
+
+
 function lockScroll() {
   document.body.classList.add('scroll-locked');
   document.body.classList.remove('scroll-unlocked');

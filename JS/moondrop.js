@@ -1,3 +1,6 @@
+//Adds functionaltiy to the moon 
+//this is the start of the uploading the users song
+
 (function setupMoonDrop() {
             const dropZone = document.getElementById('dropZone');
             const fileInput = document.getElementById('fileInput');
@@ -26,5 +29,6 @@
         })();
 
     
+
         
  

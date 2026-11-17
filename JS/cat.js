@@ -1,3 +1,7 @@
+//Cat cycles through 3 different moods at random
+//Is async from the music itself
+
+
 (function () {
     let activeCleanup = null;
 
@@ -37,7 +41,7 @@
         };
 
         const MOOD_KEYS = Object.keys(MOODS);
-        const GRAVITY = 950; // px/s^2
+        const GRAVITY = 950; 
 
         let currentMood = MOOD_KEYS[Math.floor(Math.random() * MOOD_KEYS.length)];
         let x = 0;
@@ -88,7 +92,7 @@
             const direction = Math.random() < 0.5 ? -1 : 1;
             const step = randomRange(cfg.maxStep * 0.35, cfg.maxStep) * direction;
 
-            // Predict landing spot and reflect inward if it would pass a sill edge
+
             let targetX = x + step;
             if (targetX < 0) {
                 targetX = Math.min(maxX, Math.abs(targetX));
@@ -145,7 +149,7 @@
         let lastTime = performance.now();
 
         function loop(now) {
-            // Stop loop automatically when loadScreen swaps away from visualiser.html
+
             if (!cat.isConnected) {
                 cleanup();
                 return;

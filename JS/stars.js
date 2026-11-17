@@ -1,4 +1,6 @@
- 
+ //Addds stars that randomly spawn in the background
+
+ //The stars must be Gsaped
  (function generateStars() {
             const field = document.getElementById('starfield');
             const STAR_COUNT = 500;

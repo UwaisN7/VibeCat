@@ -132,7 +132,7 @@ function readLevel(preview) {
         const yt = songStore.current.player;
         if (yt && typeof yt.getPlayerState === 'function' && yt.getPlayerState() === 1) {
             const time = performance.now() / 15;
-            return (Math.abs(Math.sin(time)) * 0.3) + (Math.random() * 0.4);
+            return ((Math.abs(Math.sin(time)) * 0.3) + (Math.random() * 0.2)) * 0.2;
         }
         return 0;
     }
