@@ -308,7 +308,7 @@ const VisualiserScene = {init() {
         this.settingsBtn = document.getElementById('back-to-settings');
         
     
-        this._onHomeClick = () => this.navigate('../index.html');
+        this._onHomeClick = () => this.navigate('index.html');
         this._onSettingsClick = () => this.navigate('Pages/settings.html'); 
         
         if (this.homeBtn) this.homeBtn.addEventListener('click', this._onHomeClick);
