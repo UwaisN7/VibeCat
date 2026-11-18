@@ -11,20 +11,25 @@
 
 let musicRec = [];
 let currentRecIndex = 0;
-
+let discoveryInterval = null;
 
 async function  loadDiscoveryVideos() {
+const container = document.querySelector('.youtube-discovery');
+    if (!container) return; 
     const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&videoCategoryId=10&q=NightcoreSyrex&maxResults=15&key=${API_KEY}`;
-
+  
     try{
         const res = await fetch (url);
         const data = await res.json();
         musicRec = data.items;
-
+  
+        container.innerHTML = '';
+        currentRecIndex = 0;
         for (let i = 0; i<3; i++){
             addCard (musicRec[i]);
             currentRecIndex++;
         }
+        clearInterval(discoveryInterval);
         setInterval(rotateCards,7000)
     }catch(err){
         console.error("Failed to load discovery", err)
@@ -53,8 +58,11 @@ function addCard (videoData){
 }
 
 function rotateCards(){
-    if (musicRec.length === 0 )return;
-
+const container = document.querySelector('.youtube-discovery');
+    if (!container ||musicRec.length === 0 ){
+         clearInterval(discoveryInterval);
+        return;
+}
     const nextVideo = musicRec [currentRecIndex % musicRec.length];
     currentRecIndex++;
 
